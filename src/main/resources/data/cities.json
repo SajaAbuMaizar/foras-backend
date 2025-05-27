@@ -1,0 +1,21 @@
+[
+  { "code": "JERUSALEM",       "nameEn": "Jerusalem",     "nameAr": "القدس",       "nameHe": "ירושלים" },
+  { "code": "TEL_AVIV",        "nameEn": "Tel Aviv",      "nameAr": "تل أبيب",     "nameHe": "תל אביב" },
+  { "code": "HAIFA",           "nameEn": "Haifa",         "nameAr": "حيفا",        "nameHe": "חיפה" },
+  { "code": "RAMLA",           "nameEn": "Ramla",         "nameAr": "الرملة",       "nameHe": "רמלה" },
+  { "code": "LOD",             "nameEn": "Lod",           "nameAr": "اللد",         "nameHe": "לוד" },
+  { "code": "ACRE",            "nameEn": "Acre",          "nameAr": "عكا",          "nameHe": "עכו" },
+  { "code": "NAZARETH",        "nameEn": "Nazareth",      "nameAr": "الناصرة",      "nameHe": "נצרת" },
+  { "code": "UMM_AL_FAHEM",    "nameEn": "Umm al-Fahem",  "nameAr": "أم الفحم",      "nameHe": "אום אל פחם" },
+  { "code": "SAFED",           "nameEn": "Safed",         "nameAr": "صفد",          "nameHe": "צפת" },
+  { "code": "BEERSHEBA",       "nameEn": "Beersheba",     "nameAr": "بئر السبع",     "nameHe": "באר שבע" },
+  { "code": "ASHDOD",          "nameEn": "Ashdod",        "nameAr": "أشدود",        "nameHe": "אשדוד" },
+  { "code": "ASHKELON",        "nameEn": "Ashkelon",      "nameAr": "عسقلان",       "nameHe": "אשקלון" },
+  { "code": "NETANYA",         "nameEn": "Netanya",       "nameAr": "نتانيا",       "nameHe": "נתניה" },
+  { "code": "HERZLIYA",        "nameEn": "Herzliya",      "nameAr": "هرتسليا",      "nameHe": "הרצליה" },
+  { "code": "HOLON",           "nameEn": "Holon",         "nameAr": "حولون",        "nameHe": "חולון" },
+  { "code": "BAT_YAM",         "nameEn": "Bat Yam",       "nameAr": "بات يام",       "nameHe": "בת ים" },
+  { "code": "RISHON_LEZION",   "nameEn": "Rishon LeZion", "nameAr": "ريشون لتسيون", "nameHe": "ראשון לציון" },
+  { "code": "BNEI_BRAK",       "nameEn": "Bnei Brak",     "nameAr": "بني براك",     "nameHe": "בני ברק" },
+  { "code": "EILAT",           "nameEn": "Eilat",         "nameAr": "إيلات",        "nameHe": "אילת" }
+]
