@@ -15,6 +15,8 @@ import portal.forasbackend.exception.business.PhoneExistsException;
 import portal.forasbackend.repository.CityRepository;
 import portal.forasbackend.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -57,5 +59,14 @@ public class UserService {
                 savedUser.getName(),
                 savedUser.getPhone()
         );
+    }
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+
+    public Optional<User> findByPhone(String phone) {
+        return userRepository.findByPhone(phone);
     }
 }

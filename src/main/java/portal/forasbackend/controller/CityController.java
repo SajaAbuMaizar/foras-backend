@@ -1,12 +1,9 @@
 package portal.forasbackend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.entity.City;
-import portal.forasbackend.repository.CityRepository;
+import portal.forasbackend.service.CityService;
 
 import java.util.List;
 
@@ -15,11 +12,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class CityController {
-    private final CityRepository cityRepository;
+
+    private final CityService cityService;  // Inject Service instead of Repository
 
     @GetMapping
     public List<City> getAllCities() {
-        return cityRepository.findAll();
+        return cityService.getAllCities();  // Call service method
     }
-
 }
