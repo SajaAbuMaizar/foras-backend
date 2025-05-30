@@ -1,4 +1,4 @@
-package portal.forasbackend.dto.request.user;
+package portal.forasbackend.dto.request.candidate;
 import lombok.Data;
 
 @Data

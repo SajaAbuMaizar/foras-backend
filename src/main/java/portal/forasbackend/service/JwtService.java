@@ -3,8 +3,9 @@ package portal.forasbackend.service;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import portal.forasbackend.entity.User;
+import portal.forasbackend.common.model.JwtUserDetails;
 
 import jakarta.annotation.PostConstruct;
 import javax.crypto.SecretKey;
@@ -31,17 +32,19 @@ public class JwtService {
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(User user) {
+    public String generateToken(JwtUserDetails user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .claim("name", user.getName())
+                .claim("role", user.getRole())
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(LocalDateTime.now().plusDays(7).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public Long validateTokenAndGetUserId(String token) {
+
+    public Long validateTokenAndGetCandidateId(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
@@ -49,4 +52,19 @@ public class JwtService {
                 .getBody();
         return Long.parseLong(claims.getSubject());
     }
+
+    public JwtClaims validateTokenAndGetClaims(String token) throws JwtException {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return new JwtClaims(
+                Long.parseLong(claims.getSubject()),
+                claims.get("role", String.class)
+        );
+    }
+
+    public record JwtClaims(Long userId, String userType) {}
 }

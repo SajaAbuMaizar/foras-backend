@@ -8,33 +8,33 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import portal.forasbackend.dto.request.user.AuthRequest;
-import portal.forasbackend.entity.User;
+import portal.forasbackend.dto.request.candidate.AuthRequest;
+import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.exception.technical.AuthException;
 import portal.forasbackend.service.JwtService;
-import portal.forasbackend.service.UserService;
+import portal.forasbackend.service.CandidateService;
 
 import java.time.Duration;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
-public class AuthController {
-    @Autowired private UserService userService;
+@RequestMapping("/api/auth/candidate")
+public class CandidateAuthController {
+    @Autowired private CandidateService candidateService;
     @Autowired private JwtService jwtService;
     @Autowired private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request, HttpServletResponse response) {
         try {
-            User user = userService.findByPhone(request.getPhone())
+            Candidate candidate = candidateService.findByPhone(request.getPhone())
                     .orElseThrow(() -> new AuthException("رقم الهاتف غير مسجل"));
 
-            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            if (!passwordEncoder.matches(request.getPassword(), candidate.getPassword())) {
                 throw new AuthException("كلمة المرور غير صحيحة");
             }
 
-            String token = jwtService.generateToken(user);
+            String token = jwtService.generateToken(candidate);
             ResponseCookie cookie = ResponseCookie.from("jwt", token)
                     .httpOnly(true)
                     .secure(false)
@@ -45,7 +45,7 @@ public class AuthController {
 
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-            return ResponseEntity.ok().body(Map.of("name", user.getName()));
+            return ResponseEntity.ok().body(Map.of("name", candidate.getName()));
         } catch (AuthException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", e.getMessage()));
@@ -68,18 +68,5 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(@CookieValue(value = "jwt", required = false) String token) {
-        if (token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 401 if no token
-        }
 
-        try {
-            Long userId = jwtService.validateTokenAndGetUserId(token);
-            User user = userService.findById(userId).orElseThrow();
-            return ResponseEntity.ok(Map.of("name", user.getName(), "type", "user"));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 401 if invalid token
-        }
-    }
 }

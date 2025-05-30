@@ -2,6 +2,7 @@ package portal.forasbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import portal.forasbackend.common.model.JwtUserDetails;
 import portal.forasbackend.enums.Gender;
 
 @Entity
@@ -9,8 +10,8 @@ import portal.forasbackend.enums.Gender;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users")
-public class User {
+@Table(name = "candidates")
+public class Candidate implements JwtUserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +33,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Builder.Default
+    private String role = "ROLE_CANDIDATE";
+
 }

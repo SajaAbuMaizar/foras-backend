@@ -1,11 +1,11 @@
 package portal.forasbackend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import portal.forasbackend.entity.User;
+import portal.forasbackend.entity.Candidate;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     boolean existsByPhone(String phoneNumber);
-    Optional<User> findByPhone(String phone);
+    Optional<Candidate> findByPhone(String phone);
 
 }

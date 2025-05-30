@@ -1,9 +1,9 @@
-package portal.forasbackend.dto.request.user;
+package portal.forasbackend.dto.request.candidate;
 import lombok.Data;
 import jakarta.validation.constraints.*;
 
 @Data
-public class UserSignupRequestDTO {
+public class CandidateSignupRequestDTO {
 
     @NotBlank(message = "Name is required")
     @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Only English letters are allowed")
