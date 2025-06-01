@@ -1,0 +1,176 @@
+[
+  {
+    "code": "ACCOUNTING",
+    "nameEn": "Accounting",
+    "nameAr": "محاسبة",
+    "nameHe": "פיננס"
+  },
+  {
+    "code": "BANKING",
+    "nameEn": "Banking",
+    "nameAr": "بنوك",
+    "nameHe": "בנקאות"
+  },
+  {
+    "code": "DIGITAL_MARKETING",
+    "nameEn": "Digital Marketing",
+    "nameAr": "تسويق الكتروني",
+    "nameHe": "שיווק דיגיטלי"
+  },
+  {
+    "code": "HOSPITALITY",
+    "nameEn": "Hospitality",
+    "nameAr": "فنادق",
+    "nameHe": "מלונאות"
+  },
+  {
+    "code": "FACTORY",
+    "nameEn": "Factory",
+    "nameAr": "مصانع",
+    "nameHe": "מפעל"
+  },
+  {
+    "code": "CLEANING",
+    "nameEn": "Cleaning",
+    "nameAr": "تنظيف",
+    "nameHe": "נקיון"
+  },
+  {
+    "code": "AGRICULTURE",
+    "nameEn": "Agriculture",
+    "nameAr": "زراعة",
+    "nameHe": "חקלאות"
+  },
+  {
+    "code": "FOOD",
+    "nameEn": "Food",
+    "nameAr": "طعام",
+    "nameHe": "אוכל"
+  },
+  {
+    "code": "ORGANIZING",
+    "nameEn": "Organizing",
+    "nameAr": "ترتيب",
+    "nameHe": "סדרנות"
+  },
+  {
+    "code": "SALES",
+    "nameEn": "Sales",
+    "nameAr": "مبيعات",
+    "nameHe": "מכירות"
+  },
+  {
+    "code": "OFFICE_WORK",
+    "nameEn": "Office Work",
+    "nameAr": "عمل مكتبي",
+    "nameHe": "עבודה משרדית"
+  },
+  {
+    "code": "DRIVERS",
+    "nameEn": "Drivers",
+    "nameAr": "سائق",
+    "nameHe": "נהגים"
+  },
+  {
+    "code": "SUPERMARKET",
+    "nameEn": "Supermarket",
+    "nameAr": "سوبرماركت",
+    "nameHe": "סופר"
+  },
+  {
+    "code": "MECHANICS",
+    "nameEn": "Mechanics",
+    "nameAr": "ميكانيكي",
+    "nameHe": "מכונאות"
+  },
+  {
+    "code": "HIGH_TECH",
+    "nameEn": "High Tech",
+    "nameAr": "هايتيك",
+    "nameHe": "הייטק"
+  },
+  {
+    "code": "CONSTRUCTION",
+    "nameEn": "Construction",
+    "nameAr": "مواقع بناء",
+    "nameHe": "אתרי בניה"
+  },
+  {
+    "code": "TRAFFIC_INSPECTOR",
+    "nameEn": "Traffic Inspector",
+    "nameAr": "مفتش مرور",
+    "nameHe": "פקח תנועה"
+  },
+  {
+    "code": "DELIVERY",
+    "nameEn": "Delivery",
+    "nameAr": "توصيل",
+    "nameHe": "שליחויות"
+  },
+  {
+    "code": "FRONT_CUSTOMER_SERVICE",
+    "nameEn": "Front Customer Service",
+    "nameAr": "خدمة العملاء المباشرة",
+    "nameHe": "שירות לקוחות פרונטלי"
+  },
+  {
+    "code": "PHONE_CUSTOMER_SERVICE",
+    "nameEn": "Phone Customer Service",
+    "nameAr": "خدمة العملاء الهاتفية",
+    "nameHe": "שירות לקוחות טלפוני"
+  },
+  {
+    "code": "PHONE_SALES",
+    "nameEn": "Phone Sales",
+    "nameAr": "مركز مبيعات هاتفي",
+    "nameHe": "מוקד מכירות טלפוני"
+  },
+  {
+    "code": "PHONE_BANKING",
+    "nameEn": "Phone Banking",
+    "nameAr": "بنك الهاتف",
+    "nameHe": "בנקאי טלפון"
+  },
+  {
+    "code": "BUS_DRIVER",
+    "nameEn": "Bus Driver",
+    "nameAr": "سائق حافلات",
+    "nameHe": "נהג הסעות"
+  },
+  {
+    "code": "TRUCK_DRIVER_12T",
+    "nameEn": "Truck Driver (12T)",
+    "nameAr": "سائق شاحنة 12 طن",
+    "nameHe": "נהג 12 טון"
+  },
+  {
+    "code": "TRUCK_DRIVER_15T",
+    "nameEn": "Truck Driver (15T)",
+    "nameAr": "سائق شاحنة 15 طن",
+    "nameHe": "נהג 15 טון"
+  },
+  {
+    "code": "FOOD_CHAINS",
+    "nameEn": "Food Chains",
+    "nameAr": "سلاسل الغذاء",
+    "nameHe": "רשתות מזון"
+  },
+  {
+    "code": "FAST_FOOD_CAFES",
+    "nameEn": "Fast Food & Cafes",
+    "nameAr": "الوجبات السريعة والمقاهي",
+    "nameHe": "מזון מהיר ובתי קפה"
+  },
+  {
+    "code": "PRODUCTION_WORKERS",
+    "nameEn": "Production Workers",
+    "nameAr": "عمال الإنتاج",
+    "nameHe": "עובדי ייצור"
+  },
+  {
+    "code": "PACKING_WORKERS",
+    "nameEn": "Packing Workers",
+    "nameAr": "عمال التعبئة",
+    "nameHe": "עובדי אריזה"
+  }
+]

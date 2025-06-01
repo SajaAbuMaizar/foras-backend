@@ -13,10 +13,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class CityController {
 
-    private final CityService cityService;  // Inject Service instead of Repository
+    private final CityService cityService;
 
     @GetMapping
     public List<City> getAllCities() {
-        return cityService.getAllCities();  // Call service method
+        return cityService.getAllCities();
     }
 }

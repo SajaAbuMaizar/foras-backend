@@ -1,6 +1,8 @@
 package portal.forasbackend.common.model;
 
-public interface JwtUserDetails {
+import org.springframework.security.core.userdetails.UserDetails;
+
+public interface JwtUserDetails extends UserDetails {
     Long getId();
     String getName();
     String getRole();
