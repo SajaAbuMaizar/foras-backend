@@ -21,6 +21,8 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(e.getMessage()));
     }
 
+
+
     // Standardized error response
     public record ErrorResponse(String message) {}
 }

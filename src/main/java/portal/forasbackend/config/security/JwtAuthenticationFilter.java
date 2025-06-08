@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
+import portal.forasbackend.service.CandidateService;
 import portal.forasbackend.service.EmployerService;
 import portal.forasbackend.service.JwtService;
 
@@ -25,6 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final EmployerService employerService;
+    private final CandidateService candidateService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -33,6 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = null;
 
+        // Cookie extraction remains the same
         if (request.getCookies() != null) {
             Optional<Cookie> jwtCookie = Arrays.stream(request.getCookies())
                     .filter(cookie -> "jwt".equals(cookie.getName()))
@@ -45,6 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
                 JwtService.JwtClaims claims = jwtService.validateTokenAndGetClaims(token);
+
                 if ("ROLE_EMPLOYER".equals(claims.userType())) {
                     Employer employer = employerService.findById(claims.userId()).orElse(null);
                     if (employer != null) {
@@ -54,7 +59,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }
                 }
+                // Add this block for candidate handling
+                else if ("ROLE_CANDIDATE".equals(claims.userType())) {
+                    Candidate candidate = candidateService.findById(claims.userId()).orElse(null);
+                    if (candidate != null) {
+                        UsernamePasswordAuthenticationToken auth =
+                                new UsernamePasswordAuthenticationToken(candidate, null, candidate.getAuthorities());
+                        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
+                }
             } catch (Exception ignored) {
+                // Consider logging the exception for debugging
             }
         }
 

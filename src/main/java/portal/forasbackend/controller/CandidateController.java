@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.request.candidate.CandidateSignupRequestDTO;
 import portal.forasbackend.dto.response.candidate.CandidateSignupResponseDTO;
-import portal.forasbackend.service.CandidateService;
+import portal.forasbackend.service.CandidateAuthService;
 
 import java.util.Map;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class CandidateController {
 
-    private final CandidateService candidateService;
+    private final CandidateAuthService candidateService;
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> registerCandidate(

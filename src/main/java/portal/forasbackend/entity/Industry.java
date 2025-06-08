@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import portal.forasbackend.common.model.LocalizableEntity;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Industry {
+public class Industry implements LocalizableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,5 +24,14 @@ public class Industry {
     private String nameAr;
     private String nameHe;
 
-    // Getters and setters
+    @Override
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    @Override
+    public String getNameHe() {
+        return nameHe;
+    }
+
 }

@@ -1,4 +1,4 @@
-package portal.forasbackend.dto.request.employer;
+package portal.forasbackend.dto.request.job;
 
 import lombok.Data;
 

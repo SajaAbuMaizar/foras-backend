@@ -1,13 +1,14 @@
 package portal.forasbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
+import portal.forasbackend.common.model.LocalizableEntity;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class City {
+public class City implements LocalizableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +22,14 @@ public class City {
 
     @Column(nullable = false)
     private String nameHe; // Hebrew name
+
+    @Override
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    @Override
+    public String getNameHe() {
+        return nameHe;
+    }
 }

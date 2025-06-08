@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -42,6 +44,18 @@ public class Job {
     @ManyToOne
     private Employer employer;
 
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobApplication> applications;
+
     private Double latitude;
     private Double longitude;
+
+    @Column(nullable = false, updatable = false)
+    private java.time.LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = java.time.LocalDateTime.now();
+    }
+
 }

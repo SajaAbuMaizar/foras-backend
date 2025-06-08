@@ -1,27 +1,33 @@
 package portal.forasbackend.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import portal.forasbackend.dto.request.employer.JobRequest;
+import portal.forasbackend.dto.request.job.JobRequest;
+import portal.forasbackend.dto.response.job.EmployerDashboardJobListResponse;
+import portal.forasbackend.dto.response.job.MainPageJobListResponse;
+import portal.forasbackend.dto.response.job.EmployerJobDetailsResponse;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.service.JobService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
+import java.nio.file.AccessDeniedException;
+import java.security.Principal;
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/employer/job-application")
+@RequestMapping("/api/job")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class JobController {
 
     private final JobService jobService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/job-application",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> postJob(
             @RequestParam("jobTitle") String jobTitle,
             @RequestParam("jobDescription") String jobDescription,
@@ -56,4 +62,33 @@ public class JobController {
 
         return ResponseEntity.ok(createdJob);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<MainPageJobListResponse>> getAllJobs() {
+        List<MainPageJobListResponse> jobs = jobService.getAllJobs();
+        return ResponseEntity.ok(jobs);
+    }
+
+    @GetMapping("/my-jobs")
+    public List<EmployerDashboardJobListResponse> getMyJobs(@AuthenticationPrincipal Employer employer) {
+        Long employerId = employer.getId();
+
+        return jobService.findByEmployerId(employerId);
+    }
+
+    // JobController.java
+    @GetMapping("/job-details/{id}")
+    public ResponseEntity<EmployerJobDetailsResponse> getJobDetailsById(@PathVariable Long id) {
+
+        EmployerJobDetailsResponse jobDetails = jobService.getJobDetailsById(id);
+
+        if (jobDetails == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(jobDetails);
+    }
+
+
+
 }
