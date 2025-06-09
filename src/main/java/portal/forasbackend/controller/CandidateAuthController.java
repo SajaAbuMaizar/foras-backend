@@ -45,7 +45,11 @@ public class CandidateAuthController {
 
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-            return ResponseEntity.ok().body(Map.of("name", candidate.getName()));
+            return ResponseEntity.ok().body(Map.of(
+                    "id", candidate.getId(),
+                    "name", candidate.getName(),
+                    "type", "candidate"
+            ));
         } catch (AuthException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", e.getMessage()));

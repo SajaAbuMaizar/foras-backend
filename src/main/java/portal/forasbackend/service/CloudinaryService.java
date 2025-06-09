@@ -43,4 +43,30 @@ public class CloudinaryService {
             throw new RuntimeException("Failed to upload image. Please try again.");
         }
     }
+
+    public String uploadEmployerLogo(MultipartFile file) {
+        if (file.isEmpty()) {
+            return null;
+        }
+
+        String uniqueId = UUID.randomUUID().toString();
+        Map<String, Object> uploadParams = ObjectUtils.asMap(
+                "folder", "jobPortal/employers/logos",
+                "public_id", "employer_logo_" + uniqueId,
+                "transformation", new Transformation()
+                        .width(200)
+                        .height(200)
+                        .crop("fit")
+                        .quality("auto:good")
+        );
+
+        try {
+            Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            return uploadResult.get("secure_url").toString();
+        } catch (IOException e) {
+            log.error("Error uploading employer logo to Cloudinary", e);
+            throw new RuntimeException("Failed to upload employer logo");
+        }
+    }
+
 }
