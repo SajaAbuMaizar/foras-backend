@@ -18,10 +18,11 @@ public class EnumController {
     @GetMapping("/genders")
     public List<Map<String, String>> getGenders() {
         return Arrays.stream(Gender.values())
-                .map(sex -> Map.of(
-                        "value", sex.name(),
-                        "labelAr", sex.getArabic(),
-                        "labelHe", sex.getHebrew()
+                .map(gender -> Map.of(
+                        "code", gender.name(),
+                        "id", gender.getId(),
+                        "nameAr", gender.getArabic(),
+                        "nameHe", gender.getHebrew()
                 ))
                 .toList();
     }

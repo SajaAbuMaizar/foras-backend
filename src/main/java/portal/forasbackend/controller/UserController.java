@@ -8,19 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import portal.forasbackend.dto.response.employer.EmployerDTO;
-import portal.forasbackend.dto.response.employer.EmployerLogoUrlDTO;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.service.CandidateService;
 import portal.forasbackend.service.EmployerService;
 import portal.forasbackend.service.JwtService;
-
-import java.util.List;
 import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -62,11 +59,6 @@ public class UserController {
             System.out.println("Error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-    }
-
-    @GetMapping("/logos")
-    public ResponseEntity<List<EmployerLogoUrlDTO>> getAllEmployerLogos() {
-        return ResponseEntity.ok(employerService.getAllCompanyLogos());
     }
 
 }

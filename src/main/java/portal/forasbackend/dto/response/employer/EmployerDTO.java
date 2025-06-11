@@ -8,4 +8,4 @@ public record EmployerDTO(
         String name,
         String companyLogoUrl,
         String type
-){}
+) {}

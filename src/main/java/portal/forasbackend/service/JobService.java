@@ -2,22 +2,31 @@ package portal.forasbackend.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
+import portal.forasbackend.dto.request.job.JobSearchRequest;
 import portal.forasbackend.dto.response.job.EmployerJobDetailsResponse;
+import portal.forasbackend.dto.response.job.JobSearchResponseDTO;
 import portal.forasbackend.dto.response.job.MainPageJobListResponse;
 import portal.forasbackend.dto.response.job.EmployerDashboardJobListResponse;
 import portal.forasbackend.entity.City;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.Industry;
 import portal.forasbackend.entity.Job;
+import portal.forasbackend.mapper.JobMapper;
 import portal.forasbackend.repository.CityRepository;
 import portal.forasbackend.repository.EmployerRepository;
 import portal.forasbackend.repository.IndustryRepository;
 import portal.forasbackend.repository.JobRepository;
+import portal.forasbackend.repository.specification.JobSpecification;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +40,7 @@ public class JobService {
     private final IndustryRepository industryRepository;
     private final EmployerRepository employerRepository;
     private final CloudinaryService cloudinaryService;
+    private final JobMapper jobMapper;
 
     public Optional<Job> findById(Long jobId) {
         return jobRepository.findById(jobId);
@@ -57,8 +67,8 @@ public class JobService {
                 .imageUrl(imageUrl)
                 .transportationAvailable(request.isTransportation())
                 .hebrewRequired(request.isHebrew())
-               // .latitude(request.getLatitude())
-               // .longitude(request.getLongitude())
+                // .latitude(request.getLatitude())
+                // .longitude(request.getLongitude())
                 .city(city)
                 .industry(industry)
                 .employer(employer)
@@ -67,31 +77,12 @@ public class JobService {
         return jobRepository.save(job);
     }
 
-    // get all the jobs for the main page (in Arabic)
-    public List<MainPageJobListResponse> getAllJobs() {
-        return jobRepository.findAll().stream()
-                .map(job -> MainPageJobListResponse.builder()
-                        .id(job.getId())
-                        .jobTitle(job.getJobTitle())
-                        .jobDescription(job.getJobDescription())
-                        .salary(job.getSalary())
-                        .requiredQualifications(job.getRequiredQualifications())
-                        .jobType(job.getJobType())
-                        .imageUrl(job.getImageUrl())
-                        .transportationAvailable(job.isTransportationAvailable())
-                        .hebrewRequired(job.isHebrewRequired())
-                        .cityName(job.getCity() != null ? job.getCity().getNameAr() : null)
-                        .industryName(job.getIndustry() != null ? job.getIndustry().getNameAr() : null)
-                        .latitude(job.getLatitude())
-                        .longitude(job.getLongitude())
-                        .employerId(job.getEmployer().getId())
-                        .employerCompanyName(job.getEmployer().getCompanyName())
-                        .employerCompanyLogoUrl(job.getEmployer().getCompanyLogoUrl())
-                        .postedDate(job.getCreatedAt().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-                        )
-                        .build())
-                .collect(Collectors.toList());
+    public Page<MainPageJobListResponse> getAllJobs(Pageable pageable) {
+        Page<Job> jobsPage = jobRepository.findAll(pageable);
+        return jobsPage.map(jobMapper::toDto);
     }
+
+
 
 
     public List<EmployerDashboardJobListResponse> findByEmployerId(Long employerId) {
@@ -114,6 +105,28 @@ public class JobService {
 
         return EmployerJobDetailsResponse.from(job);
     }
+
+
+    public Page<MainPageJobListResponse> searchJobs(
+            String cityCode,
+            String industryCode,
+            Boolean hebrewRequired,
+            Boolean transportationAvailable,
+            Pageable pageable) {
+
+        Page<Job> jobPage = jobRepository.findAll(
+                JobSpecification.withFilters(
+                        cityCode,
+                        industryCode,
+                        hebrewRequired,
+                        transportationAvailable
+                ),
+                pageable
+        );
+
+        return jobPage.map(jobMapper::toDto);
+    }
+
 
 
 }
