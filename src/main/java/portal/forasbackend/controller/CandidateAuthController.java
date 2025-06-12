@@ -1,6 +1,7 @@
 package portal.forasbackend.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,8 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.request.candidate.AuthRequest;
+import portal.forasbackend.dto.request.candidate.CandidateSignupRequestDTO;
+import portal.forasbackend.dto.response.candidate.CandidateSignupResponseDTO;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.exception.technical.AuthException;
+import portal.forasbackend.service.CandidateAuthService;
 import portal.forasbackend.service.JwtService;
 import portal.forasbackend.service.CandidateService;
 
@@ -19,10 +23,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth/candidate")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class CandidateAuthController {
-    @Autowired private CandidateService candidateService;
-    @Autowired private JwtService jwtService;
-    @Autowired private PasswordEncoder passwordEncoder;
+
+     private final CandidateService candidateService;
+     private final JwtService jwtService;
+     private final PasswordEncoder passwordEncoder;
+     private final CandidateAuthService candidateAuthService;
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request, HttpServletResponse response) {
@@ -70,6 +79,18 @@ public class CandidateAuthController {
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Map<String, Object>> registerCandidate(
+            @RequestBody CandidateSignupRequestDTO request
+    ) {
+        CandidateSignupResponseDTO candidate = candidateAuthService.registerCandidate(request);
+
+        return ResponseEntity.ok(Map.of(
+                "status", "success",
+                "data", candidate
+        ));
     }
 
 

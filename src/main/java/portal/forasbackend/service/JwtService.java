@@ -4,9 +4,10 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import portal.forasbackend.common.model.JwtUserDetails;
 
 import jakarta.annotation.PostConstruct;
+import portal.forasbackend.common.model.User;
+
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class JwtService {
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(JwtUserDetails user) {
+    public String generateToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
                 .claim("name", user.getName())
