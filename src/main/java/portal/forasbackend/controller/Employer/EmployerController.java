@@ -1,4 +1,4 @@
-package portal.forasbackend.controller;
+package portal.forasbackend.controller.Employer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.entity.Employer;
-import portal.forasbackend.service.EmployerService;
+import portal.forasbackend.service.Employer.EmployerService;
 
 @RestController
 @RequestMapping("/api/employer")

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
-import portal.forasbackend.service.CandidateService;
-import portal.forasbackend.service.EmployerService;
+import portal.forasbackend.service.Candidate.CandidateService;
+import portal.forasbackend.service.Employer.EmployerService;
 import portal.forasbackend.service.JwtService;
 
 import java.io.IOException;

@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import portal.forasbackend.dto.response.employer.EmployerDTO;
+import portal.forasbackend.entity.Admin;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
-import portal.forasbackend.service.CandidateService;
-import portal.forasbackend.service.EmployerService;
+import portal.forasbackend.service.Admin.AdminAuthService;
+import portal.forasbackend.service.Candidate.CandidateService;
+import portal.forasbackend.service.Employer.EmployerService;
 import portal.forasbackend.service.JwtService;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ public class UserController {
     private final JwtService jwtService;
     private final CandidateService candidateService;
     private final EmployerService employerService;
+    private final AdminAuthService adminService;
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@CookieValue(value = "jwt", required = false) String token) {
@@ -52,7 +55,13 @@ public class UserController {
                         "employer"
                 );
                 return ResponseEntity.ok().body(employerDTO);
-            } else {
+            } else if ("ROLE_SUPER_ADMIN".equals(userType)) {
+                Admin admin = adminService.findById(userId).orElseThrow();
+                return ResponseEntity.ok().body(Map.of(
+                        "id", admin.getId(),
+                        "name", admin.getName(),
+                        "type", "super_admin"
+                )); } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {

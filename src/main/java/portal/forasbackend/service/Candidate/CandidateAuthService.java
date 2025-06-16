@@ -1,4 +1,4 @@
-package portal.forasbackend.service;
+package portal.forasbackend.service.Candidate;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

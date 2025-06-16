@@ -1,8 +1,7 @@
-package portal.forasbackend.controller;
+package portal.forasbackend.controller.Candidate;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -14,9 +13,9 @@ import portal.forasbackend.dto.request.candidate.CandidateSignupRequestDTO;
 import portal.forasbackend.dto.response.candidate.CandidateSignupResponseDTO;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.exception.technical.AuthException;
-import portal.forasbackend.service.CandidateAuthService;
+import portal.forasbackend.service.Candidate.CandidateAuthService;
 import portal.forasbackend.service.JwtService;
-import portal.forasbackend.service.CandidateService;
+import portal.forasbackend.service.Candidate.CandidateService;
 
 import java.time.Duration;
 import java.util.Map;

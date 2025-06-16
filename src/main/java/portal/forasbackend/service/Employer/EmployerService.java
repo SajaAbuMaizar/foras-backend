@@ -1,4 +1,4 @@
-package portal.forasbackend.service;
+package portal.forasbackend.service.Employer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.response.employer.EmployerLogoUrlDTO;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.repository.EmployerRepository;
+import portal.forasbackend.service.CloudinaryService;
 
 import java.util.List;
 import java.util.Optional;

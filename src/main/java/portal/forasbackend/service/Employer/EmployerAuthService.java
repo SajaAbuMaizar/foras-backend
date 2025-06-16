@@ -1,4 +1,4 @@
-package portal.forasbackend.service;
+package portal.forasbackend.service.Employer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import portal.forasbackend.dto.request.employer.EmployerSignupRequest;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.exception.business.PhoneExistsException;
 import portal.forasbackend.repository.EmployerRepository;
+import portal.forasbackend.service.JwtService;
 
 @Service
 @RequiredArgsConstructor

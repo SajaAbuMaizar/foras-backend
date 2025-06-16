@@ -1,4 +1,4 @@
-package portal.forasbackend.controller;
+package portal.forasbackend.controller.Candidate;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
 import portal.forasbackend.entity.Candidate;
-import portal.forasbackend.service.CandidateService;
+import portal.forasbackend.service.Candidate.CandidateService;
 
 @RestController
 @RequestMapping("/api/candidate")

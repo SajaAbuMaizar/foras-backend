@@ -1,4 +1,4 @@
-package portal.forasbackend.controller;
+package portal.forasbackend.controller.Employer;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import portal.forasbackend.dto.request.employer.EmployerSignupRequest;
 import portal.forasbackend.dto.request.employer.EmployerLoginRequest;
-import portal.forasbackend.service.EmployerAuthService;
+import portal.forasbackend.service.Employer.EmployerAuthService;
 
 import java.time.Duration;
 import java.util.Map;

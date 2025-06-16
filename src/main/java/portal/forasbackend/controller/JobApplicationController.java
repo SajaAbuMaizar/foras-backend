@@ -8,14 +8,10 @@ import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.entity.JobApplication;
-import portal.forasbackend.service.EmployerService;
 import portal.forasbackend.service.JobApplicationService;
 import portal.forasbackend.service.JobService;
 
-import java.io.Console;
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/job-applications")

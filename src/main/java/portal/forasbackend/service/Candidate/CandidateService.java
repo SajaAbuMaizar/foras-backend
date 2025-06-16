@@ -1,10 +1,9 @@
-package portal.forasbackend.service;
+package portal.forasbackend.service.Candidate;
 
 import org.springframework.stereotype.Service;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
 import portal.forasbackend.entity.Candidate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import portal.forasbackend.exception.business.NotFoundException;
 import portal.forasbackend.mapper.CandidateMapper;
 import portal.forasbackend.repository.CandidateRepository;
