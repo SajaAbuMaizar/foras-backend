@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.request.job.JobSearchRequest;
-import portal.forasbackend.dto.response.job.EmployerJobDetailsResponse;
-import portal.forasbackend.dto.response.job.JobSearchResponseDTO;
-import portal.forasbackend.dto.response.job.MainPageJobListResponse;
-import portal.forasbackend.dto.response.job.EmployerDashboardJobListResponse;
+import portal.forasbackend.dto.response.job.*;
 import portal.forasbackend.entity.City;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.Industry;
@@ -127,6 +124,21 @@ public class JobService {
         return jobPage.map(jobMapper::toDto);
     }
 
+
+    public List<AdminDashboardJobListResponse> getAllJobsForAdmin() {
+        List<Job> jobs = jobRepository.findAll();
+
+        return jobs.stream()
+                .map(job -> AdminDashboardJobListResponse.builder()
+                        .id(job.getId())
+                        .jobTitle(job.getJobTitle())
+                        .jobDescription(job.getJobDescription())
+                        .salary(job.getSalary())
+                        .cityName(job.getCity())
+                        .status(job.getStatus())
+                        .build())
+                .toList();
+    }
 
 
 }
