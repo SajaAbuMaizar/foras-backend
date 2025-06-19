@@ -23,7 +23,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth/candidate")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class CandidateAuthController {
 
      private final CandidateService candidateService;

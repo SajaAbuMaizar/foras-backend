@@ -20,7 +20,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth/admin")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class AdminAuthController {
 
     private final AdminAuthService adminService;
