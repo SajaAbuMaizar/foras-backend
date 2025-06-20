@@ -90,6 +90,7 @@ public class JobService {
                         .jobDescription(job.getJobDescription())
                         .salary(job.getSalary())
                         .cityName(job.getCity())
+                        .status(job.getStatus())
                         .build()
                 )
                 .collect(Collectors.toList());

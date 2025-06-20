@@ -66,7 +66,7 @@ public class AdminAuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
-        ResponseCookie cookie = ResponseCookie.from("admin_jwt", "")
+        ResponseCookie cookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Lax")

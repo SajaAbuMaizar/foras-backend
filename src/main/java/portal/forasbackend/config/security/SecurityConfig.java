@@ -59,7 +59,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/employer/**").hasRole("EMPLOYER")
 
                         // Admin endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
 
                         .anyRequest().authenticated()
                 )

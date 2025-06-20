@@ -8,11 +8,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.request.job.JobSearchRequest;
 import portal.forasbackend.dto.response.job.*;
+import portal.forasbackend.entity.Admin;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.mapper.JobMapper;
@@ -74,13 +77,14 @@ public class JobController {
         return ResponseEntity.ok(jobService.getAllJobs(pageable));
     }
 
-  //  @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @GetMapping("/admin/jobs")
     public ResponseEntity<List<AdminDashboardJobListResponse>> getAllJobsForAdmin() {
         return ResponseEntity.ok(jobService.getAllJobsForAdmin());
     }
 
 
+    @PreAuthorize("hasRole('EMPLOYER')")
     @GetMapping("/my-jobs")
     public List<EmployerDashboardJobListResponse> getMyJobs(@AuthenticationPrincipal Employer employer) {
         Long employerId = employer.getId();

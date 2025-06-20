@@ -11,8 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import portal.forasbackend.entity.Admin;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
+import portal.forasbackend.service.Admin.AdminAuthService;
 import portal.forasbackend.service.Candidate.CandidateService;
 import portal.forasbackend.service.Employer.EmployerService;
 import portal.forasbackend.service.JwtService;
@@ -28,15 +30,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final EmployerService employerService;
     private final CandidateService candidateService;
+    private final AdminAuthService adminService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
         String token = null;
 
-        // Cookie extraction remains the same
+        // Extract token from cookie
         if (request.getCookies() != null) {
             Optional<Cookie> jwtCookie = Arrays.stream(request.getCookies())
                     .filter(cookie -> "jwt".equals(cookie.getName()))
@@ -59,7 +61,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }
                 }
-                // Add this block for candidate handling
                 else if ("ROLE_CANDIDATE".equals(claims.userType())) {
                     Candidate candidate = candidateService.findById(claims.userId()).orElse(null);
                     if (candidate != null) {
@@ -69,8 +70,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }
                 }
-            } catch (Exception ignored) {
-                // Consider logging the exception for debugging
+
+                 else if ("ROLE_SUPER_ADMIN".equals(claims.userType())) {
+                    Admin admin = adminService.findById(claims.userId()).orElse(null);
+                    if (admin != null) {
+                        UsernamePasswordAuthenticationToken auth =
+                                new UsernamePasswordAuthenticationToken(admin, null, admin.getAuthorities());
+                        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
+                }
+            } catch (Exception e) {
+                logger.error("JWT validation error", e); // Log the error
             }
         }
 

@@ -47,7 +47,7 @@ public class Job {
     // Status management (new fields)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private JobStatus status = JobStatus.PENDING_REVIEW;
+    private JobStatus status = JobStatus.PENDING;
 
    // @ManyToOne
    // @JoinColumn(name = "approved_by_id")
@@ -63,7 +63,7 @@ public class Job {
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
         if (this.status == null) {
-            this.status = JobStatus.PENDING_REVIEW;
+            this.status = JobStatus.PENDING;
         }
     }
 

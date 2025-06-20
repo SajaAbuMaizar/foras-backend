@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum JobStatus {
-    PENDING_REVIEW("Pending", "bg-yellow-100"),
+    PENDING("Pending", "bg-yellow-100"),
     APPROVED("Approved", "bg-green-100"),
     REJECTED("Rejected", "bg-red-100"),
     EXPIRED("Expired", "bg-gray-100"),
@@ -21,7 +21,7 @@ public enum JobStatus {
 
     // Additional methods
     public boolean isActive() {
-        return this == PENDING_REVIEW || this == APPROVED;
+        return this == PENDING || this == APPROVED;
     }
 
 }
