@@ -3,12 +3,15 @@ package portal.forasbackend.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.response.job.*;
 import portal.forasbackend.entity.*;
+import portal.forasbackend.enums.JobStatus;
 import portal.forasbackend.mapper.JobMapper;
 import portal.forasbackend.repository.CityRepository;
 import portal.forasbackend.repository.EmployerRepository;
@@ -18,6 +21,7 @@ import portal.forasbackend.repository.specification.JobSpecification;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,10 +78,20 @@ public class JobService {
     }
 
 
-    public Page<MainPageJobListResponse> getAllJobs(Pageable pageable) {
-        return jobRepository.findAll(pageable)
-                .map(jobMapper::toDto);
+    public Page<MainPageJobListResponse> getAllApprovedJobsWithArabic(Pageable pageable) {
+        Page<Job> approvedJobs = jobRepository.findByStatus(JobStatus.APPROVED, pageable);
+
+        List<MainPageJobListResponse> responses = approvedJobs.getContent().stream()
+                .map(job -> jobTranslationService.getArabicTranslation(job.getId())
+                        .map(t -> jobMapper.toDto(job, t))
+                        .orElse(null))
+                .filter(Objects::nonNull)
+                .toList();
+
+        return new PageImpl<>(responses, pageable, approvedJobs.getTotalElements());
     }
+
+
 
     public List<EmployerDashboardJobListResponse> findByEmployerId(Long employerId) {
         return jobRepository.findByEmployerId(employerId).stream()
@@ -120,11 +134,21 @@ public class JobService {
             Boolean transportationAvailable,
             Pageable pageable) {
 
-        return jobRepository.findAll(
+        Page<Job> jobs = jobRepository.findAll(
                 JobSpecification.withFilters(cityCode, industryCode, hebrewRequired, transportationAvailable),
                 pageable
-        ).map(jobMapper::toDto);
+        );
+
+        List<MainPageJobListResponse> content = jobs.getContent().stream()
+                .map(job -> jobTranslationService.getArabicTranslation(job.getId())
+                        .map(t -> jobMapper.toDto(job, t))
+                        .orElse(null))
+                .filter(Objects::nonNull)
+                .toList();
+
+        return new PageImpl<>(content, pageable, jobs.getTotalElements());
     }
+
 
     public List<AdminDashboardJobListResponse> getAllJobsForAdmin() {
         return jobRepository.findAll().stream()
@@ -145,5 +169,33 @@ public class JobService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void approveJob(Long jobId, Admin admin) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new EntityNotFoundException("Job not found with ID: " + jobId));
+
+        boolean hasArabic = job.getTranslations().stream()
+                .anyMatch(t -> "ar".equals(t.getLanguage()) && !t.isOriginal());
+
+        if (!hasArabic) {
+            throw new IllegalStateException("Arabic translation is required before approval.");
+        }
+
+        job.approve(admin);
+    }
+
+    @Transactional
+    public void updateJobDate(Long jobId) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new EntityNotFoundException("Job not found or unauthorized"));
+
+        if (job.getStatus() != JobStatus.APPROVED) {
+            throw new IllegalStateException("Only approved jobs can be boosted");
+        }
+
+        job.updatePublishDate();
+    }
+
 
 }

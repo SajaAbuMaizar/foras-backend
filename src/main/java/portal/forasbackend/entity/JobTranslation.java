@@ -27,17 +27,17 @@ public class JobTranslation {
     @Column(length = 1000)
     private String description;
 
-    private String RequiredQualifications;
+    private String requiredQualifications;
 
     private boolean isOriginal;
 
-    private boolean isVerified;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "verified_by_id")
-    private Admin verifiedBy;
-
-    private LocalDateTime verifiedAt;
+//    private boolean isVerified;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "verified_by_id")
+//    private Admin verifiedBy;
+//
+//    private LocalDateTime verifiedAt;
 
     private LocalDateTime createdAt;
 

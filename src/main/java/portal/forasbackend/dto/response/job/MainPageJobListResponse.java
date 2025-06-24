@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import portal.forasbackend.dto.response.employer.EmployerSummaryDTO;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 public class MainPageJobListResponse {
@@ -23,5 +25,5 @@ public class MainPageJobListResponse {
 
     private EmployerSummaryDTO employer;
 
-    private String postedDate;
+    private LocalDate publishDate;
 }

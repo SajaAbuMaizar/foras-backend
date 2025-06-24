@@ -23,6 +23,8 @@ import portal.forasbackend.service.JobService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.data.domain.Pageable;
+import portal.forasbackend.service.JobTranslationService;
+
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
@@ -34,9 +36,11 @@ public class JobController {
 
     private final JobService jobService;
     private final JobMapper jobMapper;
+    private final JobTranslationService jobTranslationService;
 
     @PostMapping(path = "/job-application", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> postJob(
+            @RequestParam("language") String language,
             @RequestParam("jobTitle") String jobTitle,
             @RequestParam("jobDescription") String jobDescription,
             @RequestParam("city") Long cityId,
@@ -52,7 +56,7 @@ public class JobController {
         JobRequest request = new JobRequest();
         request.setJobTitle(jobTitle);
         request.setJobDescription(jobDescription);
-        request.setLanguage("he"); //todo : make the function accept language and assign it
+        request.setLanguage(language);
         request.setCityId(cityId);
         request.setJobType(jobType);
         request.setIndustryId(industryId);
@@ -74,8 +78,8 @@ public class JobController {
 
     @GetMapping
     public ResponseEntity<Page<MainPageJobListResponse>> getAllJobs(
-            @PageableDefault(size = 9) Pageable pageable) {  // ✅ Fetch 9 jobs per page
-        return ResponseEntity.ok(jobService.getAllJobs(pageable));
+            @PageableDefault(size = 9) Pageable pageable) {
+        return ResponseEntity.ok(jobService.getAllApprovedJobsWithArabic(pageable));
     }
 
     @PreAuthorize("hasRole('SUPER_ADMIN')")
@@ -117,7 +121,24 @@ public class JobController {
         return ResponseEntity.ok(jobDetails);
     }
 
+    @PostMapping("/admin/translate-job/{id}")
+    public ResponseEntity<Void> translateJob(
+            @PathVariable Long id,
+            @RequestParam("translatedTitle") String translatedTitle,
+            @RequestParam("translatedDescription") String translatedDescription,
+            @RequestParam("translatedRequiredQualifications") String translatedQualifications
+    ) {
+        jobTranslationService.upsertArabicTranslation(id, translatedTitle, translatedDescription, translatedQualifications);
+        return ResponseEntity.ok().build();
+    }
 
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
+    @PostMapping("/admin/approve-job/{id}")
+    public ResponseEntity<Void> approveJob(@PathVariable Long id, @AuthenticationPrincipal Admin admin) {
+        jobService.approveJob(id, admin);
+        return ResponseEntity.ok().build();
+    }
 
 
     @GetMapping("/search")
@@ -147,9 +168,11 @@ public class JobController {
     }
 
 
-
-
-
+    @PostMapping("/{id}/update-date")
+    public ResponseEntity<Void> updateJobDate(@PathVariable Long id) {
+        jobService.updateJobDate(id);
+        return ResponseEntity.ok().build();
+    }
 
 
 }

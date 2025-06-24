@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import portal.forasbackend.enums.JobStatus;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,33 +46,55 @@ public class Job {
     @Column(nullable = false)
     private JobStatus status = JobStatus.PENDING;
 
-    private LocalDateTime approvedAt;
     private String rejectionReason;
+
+
+    private LocalDateTime approvedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "approved_by_id")
+    private Admin approvedBy;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column
+    private LocalDate publishDate;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+
+        if (this.publishDate == null) {
+            this.publishDate = LocalDate.now();
+        }
+
         if (this.status == null) {
             this.status = JobStatus.PENDING;
         }
     }
 
+
     public boolean isVisible() {
         return this.status == JobStatus.APPROVED;
     }
 
-    public void approve() {
+    public void approve(Admin admin) {
         this.status = JobStatus.APPROVED;
         this.approvedAt = LocalDateTime.now();
         this.rejectionReason = null;
+        this.approvedBy = admin;
     }
 
     public void reject(String reason) {
         this.status = JobStatus.REJECTED;
         this.rejectionReason = reason;
         this.approvedAt = null;
+        this.approvedBy = null;
     }
+
+    public void updatePublishDate() {
+        this.publishDate = LocalDate.now();
+    }
+
 }
