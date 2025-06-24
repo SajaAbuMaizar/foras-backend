@@ -9,7 +9,7 @@ import portal.forasbackend.entity.Job;
 public interface JobMapper {
 
     @Mapping(target = "employer", source = "employer")
-    @Mapping(target = "cityName", source = "city.nameAr")  // ✅ Correct mapping
-    @Mapping(target = "industryName", source = "industry.nameAr") // ✅ Ensure correct industry mapping
+    @Mapping(target = "cityName", source = "city.nameAr")
+    @Mapping(target = "industryName", source = "industry.nameAr")
     MainPageJobListResponse toDto(Job job);
 }

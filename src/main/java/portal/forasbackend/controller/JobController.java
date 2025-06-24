@@ -35,7 +35,7 @@ public class JobController {
     private final JobService jobService;
     private final JobMapper jobMapper;
 
-    @PostMapping(path = "/job-application",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/job-application", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> postJob(
             @RequestParam("jobTitle") String jobTitle,
             @RequestParam("jobDescription") String jobDescription,
@@ -47,14 +47,12 @@ public class JobController {
             @RequestParam("jobImage") MultipartFile jobImage,
             @RequestParam(name = "transportation", required = false, defaultValue = "false") boolean transportation,
             @RequestParam(name = "hebrew", required = false, defaultValue = "false") boolean hebrew,
-      //      @RequestParam(name = "latitude", required = false) Double latitude,
-          //  @RequestParam(name = "longitude", required = false) Double longitude,
             @AuthenticationPrincipal Employer employer
     ) {
-
         JobRequest request = new JobRequest();
         request.setJobTitle(jobTitle);
         request.setJobDescription(jobDescription);
+        request.setLanguage("he"); //todo : make the function accept language and assign it
         request.setCityId(cityId);
         request.setJobType(jobType);
         request.setIndustryId(industryId);
@@ -62,14 +60,17 @@ public class JobController {
         request.setRequiredQualifications(requiredQualifications);
         request.setTransportation(transportation);
         request.setHebrew(hebrew);
-        //request.setLatitude(latitude);
-        //request.setLongitude(longitude);
+        // latitude, longitude if used
+
+
 
         String employerPhone = employer.getPhone();
+
         Job createdJob = jobService.createJob(request, jobImage, employerPhone);
 
         return ResponseEntity.ok(createdJob);
     }
+
 
     @GetMapping
     public ResponseEntity<Page<MainPageJobListResponse>> getAllJobs(
@@ -92,11 +93,11 @@ public class JobController {
         return jobService.findByEmployerId(employerId);
     }
 
-    // JobController.java
-    @GetMapping("/job-details/{id}")
+
+    @GetMapping("/employer/job-details/{id}")
     public ResponseEntity<EmployerJobDetailsResponse> getJobDetailsById(@PathVariable Long id) {
 
-        EmployerJobDetailsResponse jobDetails = jobService.getJobDetailsById(id);
+        EmployerJobDetailsResponse jobDetails = jobService.getEmployerJobDetailsById(id);
 
         if (jobDetails == null) {
             return ResponseEntity.notFound().build();
@@ -104,6 +105,19 @@ public class JobController {
 
         return ResponseEntity.ok(jobDetails);
     }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
+    @GetMapping("/admin/job-details/{id}")
+    public ResponseEntity<AdminJobDetailsResponse> getJobDetails(@PathVariable Long id) {
+        AdminJobDetailsResponse jobDetails = jobService.getAdminJobDetailsById(id);
+        if (jobDetails == null) {
+            return ResponseEntity.notFound().build();
+        }
+        System.out.println(jobDetails);
+        return ResponseEntity.ok(jobDetails);
+    }
+
+
 
 
     @GetMapping("/search")

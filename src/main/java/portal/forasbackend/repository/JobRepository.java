@@ -16,5 +16,15 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
     @Query("SELECT j FROM Job j LEFT JOIN FETCH j.applications a LEFT JOIN FETCH a.candidate WHERE j.id = :id")
     Optional<Job> findByIdWithCandidates(@Param("id") Long id);
 
+    @Query("""
+    SELECT j FROM Job j
+    LEFT JOIN FETCH j.translations
+    LEFT JOIN FETCH j.city
+    LEFT JOIN FETCH j.industry
+    WHERE j.id = :id
+""")
+    Optional<Job> findByIdWithDetails(@Param("id") Long id);
+
+
 
 }

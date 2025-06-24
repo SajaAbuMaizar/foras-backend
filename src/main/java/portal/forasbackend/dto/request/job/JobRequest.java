@@ -6,6 +6,7 @@ import lombok.Data;
 public class JobRequest {
     private String jobTitle;
     private String jobDescription;
+    private String language; // "he" or "ar"
     private Long cityId;
     private String jobType;
     private Long industryId;
