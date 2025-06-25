@@ -117,7 +117,6 @@ public class JobController {
         if (jobDetails == null) {
             return ResponseEntity.notFound().build();
         }
-        System.out.println(jobDetails);
         return ResponseEntity.ok(jobDetails);
     }
 
@@ -148,9 +147,6 @@ public class JobController {
             @RequestParam(required = false) String hebrewRequired,
             @RequestParam(required = false) String transportationAvailable,
             @PageableDefault(size = 9) Pageable pageable) {
-
-        System.out.println("City: " + city + ", Industry: " + industry +
-                ", Hebrew Required: " + hebrewRequired + ", Transportation Available: " + transportationAvailable);
 
         // "all" should be treated as null
         String normalizedCity = ("all".equalsIgnoreCase(city)) ? null : city;
