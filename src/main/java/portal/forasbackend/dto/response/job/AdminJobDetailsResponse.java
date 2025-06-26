@@ -2,6 +2,7 @@ package portal.forasbackend.dto.response.job;
 
 import lombok.Builder;
 import lombok.Data;
+import java.time.format.DateTimeFormatter;
 import portal.forasbackend.dto.LocalizedNameDto;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.entity.JobTranslation;
@@ -41,6 +42,9 @@ public class AdminJobDetailsResponse {
                 .filter(t -> !t.isOriginal())
                 .findFirst().orElse(null);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String formattedCreatedAt = job.getCreatedAt().format(formatter);
+
         return AdminJobDetailsResponse.builder()
                 .id(job.getId())
                 .imageUrl(job.getImageUrl())
@@ -48,7 +52,7 @@ public class AdminJobDetailsResponse {
                 .jobType(job.getJobType())
                 .transportationAvailable(job.isTransportationAvailable())
                 .hebrewRequired(job.isHebrewRequired())
-                .createdAt(job.getCreatedAt().toString())
+                .createdAt(formattedCreatedAt)
                 .industryName(LocalizedNameDto.from(job.getIndustry()))
                 .cityName(LocalizedNameDto.from(job.getCity()))
                 .titleOriginal(original != null ? original.getTitle() : "")

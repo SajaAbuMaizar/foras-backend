@@ -21,6 +21,8 @@ import portal.forasbackend.entity.Job;
 import portal.forasbackend.mapper.JobMapper;
 import portal.forasbackend.service.JobService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import portal.forasbackend.dto.response.shared.PagedResponse;
+
 
 import org.springframework.data.domain.Pageable;
 import portal.forasbackend.service.JobTranslationService;
@@ -28,6 +30,7 @@ import portal.forasbackend.service.JobTranslationService;
 import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/job")
@@ -53,6 +56,13 @@ public class JobController {
             @RequestParam(name = "hebrew", required = false, defaultValue = "false") boolean hebrew,
             @AuthenticationPrincipal Employer employer
     ) {
+
+        // Validate language input
+        if (!"he".equals(language) && !"ar".equals(language)) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Invalid language code. Must be 'he' or 'ar'"
+            ));
+        }
         JobRequest request = new JobRequest();
         request.setJobTitle(jobTitle);
         request.setJobDescription(jobDescription);
@@ -76,11 +86,25 @@ public class JobController {
     }
 
 
+
     @GetMapping
-    public ResponseEntity<Page<MainPageJobListResponse>> getAllJobs(
+    public ResponseEntity<PagedResponse<MainPageJobListResponse>> getAllJobs(
             @PageableDefault(size = 9) Pageable pageable) {
-        return ResponseEntity.ok(jobService.getAllApprovedJobsWithArabic(pageable));
+
+        Page<MainPageJobListResponse> page = jobService.getAllApprovedJobsWithArabic(pageable);
+
+        PagedResponse<MainPageJobListResponse> response = new PagedResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
+
+        return ResponseEntity.ok(response);
     }
+
 
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     @GetMapping("/admin/jobs")
@@ -120,6 +144,7 @@ public class JobController {
         return ResponseEntity.ok(jobDetails);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
     @PostMapping("/admin/translate-job/{id}")
     public ResponseEntity<Void> translateJob(
             @PathVariable Long id,
@@ -141,14 +166,13 @@ public class JobController {
 
 
     @GetMapping("/search")
-    public ResponseEntity<Page<MainPageJobListResponse>> searchJobs(
+    public ResponseEntity<PagedResponse<MainPageJobListResponse>> searchJobs(
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String industry,
             @RequestParam(required = false) String hebrewRequired,
             @RequestParam(required = false) String transportationAvailable,
             @PageableDefault(size = 9) Pageable pageable) {
 
-        // "all" should be treated as null
         String normalizedCity = ("all".equalsIgnoreCase(city)) ? null : city;
         String normalizedIndustry = ("all".equalsIgnoreCase(industry)) ? null : industry;
 
@@ -158,10 +182,22 @@ public class JobController {
         Boolean isTransportAvailable = ("true".equalsIgnoreCase(transportationAvailable)) ? Boolean.TRUE :
                 ("false".equalsIgnoreCase(transportationAvailable)) ? Boolean.FALSE : null;
 
-        return ResponseEntity.ok(
-                jobService.searchJobs(normalizedCity, normalizedIndustry, isHebrewRequired, isTransportAvailable, pageable)
+        Page<MainPageJobListResponse> page = jobService.searchJobs(
+                normalizedCity, normalizedIndustry, isHebrewRequired, isTransportAvailable, pageable
         );
+
+        PagedResponse<MainPageJobListResponse> response = new PagedResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
+
+        return ResponseEntity.ok(response);
     }
+
 
 
     @PostMapping("/{id}/update-date")

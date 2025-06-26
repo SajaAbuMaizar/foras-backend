@@ -151,7 +151,7 @@ public class JobService {
 
 
     public List<AdminDashboardJobListResponse> getAllJobsForAdmin() {
-        return jobRepository.findAll().stream()
+        return jobRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(job -> {
                     JobTranslation originalTranslation = job.getTranslations().stream()
                             .filter(JobTranslation::isOriginal)
@@ -170,13 +170,14 @@ public class JobService {
                 .collect(Collectors.toList());
     }
 
+
     @Transactional
     public void approveJob(Long jobId, Admin admin) {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new EntityNotFoundException("Job not found with ID: " + jobId));
 
         boolean hasArabic = job.getTranslations().stream()
-                .anyMatch(t -> "ar".equals(t.getLanguage()) && !t.isOriginal());
+                .anyMatch(t -> "ar".equals(t.getLanguage()));
 
         if (!hasArabic) {
             throw new IllegalStateException("Arabic translation is required before approval.");

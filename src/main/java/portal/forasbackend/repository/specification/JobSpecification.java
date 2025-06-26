@@ -3,6 +3,8 @@ package portal.forasbackend.repository.specification;
 import org.springframework.data.jpa.domain.Specification;
 import portal.forasbackend.entity.Job;
 import jakarta.persistence.criteria.Predicate;
+import portal.forasbackend.enums.JobStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,9 @@ public class JobSpecification {
 
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            // 🔒 Only approved jobs
+            predicates.add(criteriaBuilder.equal(root.get("status"), JobStatus.APPROVED));
 
             if (cityCode != null && !cityCode.equals("all")) {
                 predicates.add(criteriaBuilder.equal(
