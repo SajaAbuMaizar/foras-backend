@@ -34,6 +34,7 @@ public class EmployerController {
         return ResponseEntity.ok().body("Logo uploaded successfully");
     }
 
+    @PreAuthorize("hasRole('EMPLOYER')")
     @PostMapping("/change-lang")
     public ResponseEntity<?> changeLanguage(@RequestBody LanguageChangeRequest request, @AuthenticationPrincipal Employer employer) {
         employer.setPreferredLanguage(request.getLang());
