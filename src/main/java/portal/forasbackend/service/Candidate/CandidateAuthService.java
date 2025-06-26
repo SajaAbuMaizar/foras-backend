@@ -14,6 +14,7 @@ import portal.forasbackend.exception.business.InvalidGenderException;
 import portal.forasbackend.exception.business.PhoneExistsException;
 import portal.forasbackend.repository.CityRepository;
 import portal.forasbackend.repository.CandidateRepository;
+import portal.forasbackend.service.JwtService;
 
 
 @Service
@@ -23,9 +24,11 @@ public class CandidateAuthService {
     private final CandidateRepository candidateRepository;
     private final CityRepository cityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+
 
     @Transactional
-    public CandidateSignupResponseDTO registerCandidate(CandidateSignupRequestDTO request) {
+    public String registerCandidate(CandidateSignupRequestDTO request) {
         // Validate phone number
         if (candidateRepository.existsByPhone(request.getPhone())) {
             throw new PhoneExistsException(request.getPhone());
@@ -53,10 +56,6 @@ public class CandidateAuthService {
                         .build()
         );
 
-        return new CandidateSignupResponseDTO(
-                savedCandidate.getId(),
-                savedCandidate.getName(),
-                savedCandidate.getPhone()
-        );
+        return jwtService.generateToken(savedCandidate);
     }
 }

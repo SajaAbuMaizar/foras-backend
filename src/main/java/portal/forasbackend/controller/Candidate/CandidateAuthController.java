@@ -66,29 +66,22 @@ public class CandidateAuthController {
         }
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        ResponseCookie cookie = ResponseCookie.from("jwt", "")
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("Lax")
-                .path("/")
-                .maxAge(0)
-                .build();
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        return ResponseEntity.ok().build();
-    }
+
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, Object>> registerCandidate(
-            @RequestBody CandidateSignupRequestDTO request
-    ) {
-        CandidateSignupResponseDTO candidate = candidateAuthService.registerCandidate(request);
+    public ResponseEntity<?> registerCandidate(@RequestBody CandidateSignupRequestDTO request, HttpServletResponse response) {
+        String jwt = candidateAuthService.registerCandidate(request);
 
-        return ResponseEntity.ok(Map.of(
-                "status", "success",
-                "data", candidate
-        ));
+        // Set JWT as HTTP-only cookie
+        ResponseCookie cookie = ResponseCookie.from("jwt", jwt)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(7))
+                .build();
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return ResponseEntity.ok(Map.of("status", "success"));
     }
 
 
