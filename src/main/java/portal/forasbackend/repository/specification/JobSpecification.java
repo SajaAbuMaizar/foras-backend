@@ -23,7 +23,7 @@ public class JobSpecification {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            // 🔒 Only approved jobs
+            // Only approved jobs
             predicates.add(criteriaBuilder.equal(root.get("status"), JobStatus.APPROVED));
 
             if (cityCode != null && !cityCode.equals("all")) {
