@@ -46,5 +46,9 @@ public class EmployerService {
                 .toList();
     }
 
+    public void save(Employer employer) {
+        employerRepository.save(employer);
+    }
+
 }
 

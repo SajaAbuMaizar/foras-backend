@@ -27,6 +27,8 @@ public class Employer implements User {
     private String phone;
     private String password;
     private String companyLogoUrl;
+    private String preferredLanguage; // "ar" or "he"
+
 
     private String role = "ROLE_EMPLOYER";
 
