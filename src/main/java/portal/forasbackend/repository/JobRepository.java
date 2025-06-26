@@ -35,4 +35,6 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
 
     List<Job> findAllByOrderByCreatedAtDesc();
 
+    List<Job> findByEmployerIdOrderByCreatedAtDesc(Long employerId);
+
 }

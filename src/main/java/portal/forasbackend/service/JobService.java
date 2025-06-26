@@ -94,7 +94,7 @@ public class JobService {
 
 
     public List<EmployerDashboardJobListResponse> findByEmployerId(Long employerId) {
-        return jobRepository.findByEmployerId(employerId).stream()
+        return jobRepository.findByEmployerIdOrderByCreatedAtDesc(employerId).stream()
                 .map(job -> {
                     JobTranslation original = job.getTranslations().stream()
                             .filter(JobTranslation::isOriginal)
@@ -110,6 +110,7 @@ public class JobService {
                 })
                 .collect(Collectors.toList());
     }
+
 
     public EmployerJobDetailsResponse getEmployerJobDetailsById(Long jobId) {
         Job job = jobRepository.findByIdWithCandidates(jobId)
