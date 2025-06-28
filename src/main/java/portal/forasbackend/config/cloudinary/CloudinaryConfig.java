@@ -1,19 +1,30 @@
+// src/main/java/portal/forasbackend/config/cloudinary/CloudinaryConfig.java
 package portal.forasbackend.config.cloudinary;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CloudinaryConfig {
 
+    @Value("${cloudinary.cloud-name}")
+    private String cloudName;
+
+    @Value("${cloudinary.api-key}")
+    private String apiKey;
+
+    @Value("${cloudinary.api-secret}")
+    private String apiSecret;
+
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dr1xulz8a",
-                "api_key", "681843879894419",
-                "api_secret", "81W87OqCu4oO3RXYbNURNCQe9g8",
+                "cloud_name", cloudName,
+                "api_key", apiKey,
+                "api_secret", apiSecret,
                 "secure", true
         ));
     }
