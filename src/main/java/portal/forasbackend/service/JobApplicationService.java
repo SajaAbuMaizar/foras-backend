@@ -1,8 +1,10 @@
 package portal.forasbackend.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.web.webauthn.management.JdbcUserCredentialRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.JobApplication;
 import portal.forasbackend.entity.Job;
@@ -13,6 +15,7 @@ import portal.forasbackend.repository.JobRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JobApplicationService {
@@ -21,20 +24,39 @@ public class JobApplicationService {
     private final JobRepository jobRepo;
     private final CandidateRepository candidateRepo;
 
+    @Transactional
     public void applyToJob(Long jobId, Long candidateId) {
-        if (jobApplicationRepo.existsByJobIdAndCandidateId(jobId, candidateId)) {
+        try {
+            // Check if already applied
+            if (hasAlreadyApplied(jobId, candidateId)) {
+                throw new IllegalStateException("Already applied to this job");
+            }
+
+            Job job = jobRepo.findById(jobId)
+                    .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
+
+            Candidate candidate = candidateRepo.findById(candidateId)
+                    .orElseThrow(() -> new RuntimeException("Candidate not found with id: " + candidateId));
+
+            JobApplication application = JobApplication.builder()
+                    .job(job)
+                    .candidate(candidate)
+                    .build();
+
+            jobApplicationRepo.save(application);
+            log.info("Successfully created job application for candidate {} to job {}", candidateId, jobId);
+
+        } catch (DataIntegrityViolationException e) {
+            log.warn("Duplicate application attempt for candidate {} to job {}", candidateId, jobId);
             throw new IllegalStateException("Already applied to this job");
+        } catch (Exception e) {
+            log.error("Error creating job application for candidate {} to job {}: {}", candidateId, jobId, e.getMessage(), e);
+            throw new RuntimeException("Failed to submit application: " + e.getMessage());
         }
+    }
 
-        Job job = jobRepo.findById(jobId).orElseThrow();
-        Candidate candidate = candidateRepo.findById(candidateId).orElseThrow();
-
-        JobApplication application = JobApplication.builder()
-                .job(job)
-                .candidate(candidate)
-                .build();
-
-        jobApplicationRepo.save(application);
+    public boolean hasAlreadyApplied(Long jobId, Long candidateId) {
+        return jobApplicationRepo.existsByJobIdAndCandidateId(jobId, candidateId);
     }
 
     public List<JobApplication> getApplicationsByCandidate(Long candidateId) {
@@ -47,7 +69,7 @@ public class JobApplicationService {
 
     public Job getJobById(Long jobId) {
         return jobRepo.findById(jobId)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
     }
 
     public Optional<Candidate> findCandidateByUserId(Long userId) {
@@ -57,6 +79,4 @@ public class JobApplicationService {
     public List<JobApplication> findByCandidate(Candidate candidate) {
         return jobApplicationRepo.findByCandidate(candidate);
     }
-
-
 }
