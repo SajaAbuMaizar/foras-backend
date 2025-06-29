@@ -1,6 +1,7 @@
 package portal.forasbackend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.JobApplication;
 
@@ -12,4 +13,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     boolean existsByJobIdAndCandidateId(Long jobId, Long candidateId);
     List<JobApplication> findByCandidateId(Long candidateId);
     List<JobApplication> findByJobId(Long jobId);
+
+    List<JobApplication> findByCandidate(Candidate candidate);
 }

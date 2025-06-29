@@ -1,6 +1,7 @@
 package portal.forasbackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.webauthn.management.JdbcUserCredentialRepository;
 import org.springframework.stereotype.Service;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.JobApplication;
@@ -10,6 +11,7 @@ import portal.forasbackend.repository.JobApplicationRepository;
 import portal.forasbackend.repository.JobRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +48,14 @@ public class JobApplicationService {
     public Job getJobById(Long jobId) {
         return jobRepo.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
+    }
+
+    public Optional<Candidate> findCandidateByUserId(Long userId) {
+        return candidateRepo.findById(userId);
+    }
+
+    public List<JobApplication> findByCandidate(Candidate candidate) {
+        return jobApplicationRepo.findByCandidate(candidate);
     }
 
 

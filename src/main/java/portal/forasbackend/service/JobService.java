@@ -19,7 +19,9 @@ import portal.forasbackend.repository.IndustryRepository;
 import portal.forasbackend.repository.JobRepository;
 import portal.forasbackend.repository.specification.JobSpecification;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -198,7 +200,5 @@ public class JobService {
 
         job.updatePublishDate();
     }
-
-
 
 }
