@@ -113,53 +113,6 @@ public class JwtService {
         }
     }
 
-    public String refreshAccessToken(String refreshToken) {
-        try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(refreshToken)
-                    .getBody();
-
-            String tokenType = claims.get("type", String.class);
-            if (!"refresh".equals(tokenType)) {
-                throw new InvalidTokenException("Invalid refresh token");
-            }
-
-            // Blacklist the old access token
-            String oldAccessJti = claims.get("accessJti", String.class);
-            if (oldAccessJti != null) {
-                blacklistedTokens.add(oldAccessJti);
-            }
-
-            // Generate new access token
-            // You'll need to fetch the user from DB here
-            Long userId = Long.parseLong(claims.getSubject());
-            // ... fetch user and generate new token
-
-            return ""; // Return new access token
-        } catch (Exception e) {
-            throw new InvalidTokenException("Invalid refresh token");
-        }
-    }
-
-    public void revokeToken(String token) {
-        try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-
-            String jti = claims.getId();
-            if (jti != null) {
-                blacklistedTokens.add(jti);
-            }
-        } catch (Exception e) {
-            log.error("Failed to revoke token", e);
-        }
-    }
-
     // Clean up expired tokens from blacklist periodically
     @Scheduled(fixedDelay = 3600000) // Every hour
     public void cleanupBlacklist() {

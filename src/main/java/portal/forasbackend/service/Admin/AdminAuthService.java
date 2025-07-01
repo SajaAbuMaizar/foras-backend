@@ -24,4 +24,5 @@ public class AdminAuthService {
     public Admin save(Admin admin) {
         return adminRepository.save(admin);
     }
+
 }
