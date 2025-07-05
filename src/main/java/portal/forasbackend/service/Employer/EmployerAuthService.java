@@ -2,8 +2,10 @@ package portal.forasbackend.service.Employer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import portal.forasbackend.dto.request.employer.EmployerLoginRequest;
 import portal.forasbackend.dto.request.employer.EmployerSignupRequest;
 import portal.forasbackend.entity.Employer;
@@ -23,7 +25,7 @@ public class EmployerAuthService {
 
     public String registerEmployer(EmployerSignupRequest request) {
         if (employerRepository.existsByPhone(request.getPhone())) {
-            throw new PhoneExistsException("رقم الهاتف مستخدم بالفعل");
+            throw new PhoneExistsException(request.getPhone());
         }
 
         Employer employer = new Employer();
@@ -41,13 +43,25 @@ public class EmployerAuthService {
 
     public String loginEmployer(EmployerLoginRequest request) {
         Employer employer = employerRepository.findByPhone(request.getPhone())
-                .orElseThrow(() -> new RuntimeException("رقم الهاتف غير مسجل"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "رقم الهاتف غير مسجل. يرجى التسجيل أولاً"
+                ));
 
         if (!passwordEncoder.matches(request.getPassword(), employer.getPassword())) {
-            throw new RuntimeException("كلمة المرور غير صحيحة");
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى"
+            );
         }
 
-        return jwtService.generateToken(employer);
+//        if (!employer.isActive()) {
+//            throw new ResponseStatusException(
+//                    HttpStatus.FORBIDDEN,
+//                    "الحساب معطل. يرجى التواصل مع الدعم"
+//            );
+//        }
 
+        return jwtService.generateToken(employer);
     }
 }

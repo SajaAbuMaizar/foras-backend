@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import portal.forasbackend.dto.request.employer.EmployerSignupRequest;
 import portal.forasbackend.dto.request.employer.EmployerLoginRequest;
 import portal.forasbackend.service.Employer.EmployerAuthService;
@@ -62,19 +63,32 @@ public class EmployerAuthController {
                                    HttpServletResponse response) {
         log.debug("Employer login attempt: {}", request.getPhone());
 
-        String jwt = employerAuthService.loginEmployer(request);
+        try {
+            String jwt = employerAuthService.loginEmployer(request);
 
-        ResponseCookie cookie = ResponseCookie.from("jwt", jwt)
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("Strict")
-                .path("/")
-                .maxAge(Duration.ofDays(7))
-                .build();
+            ResponseCookie cookie = ResponseCookie.from("jwt", jwt)
+                    .httpOnly(true)
+                    .secure(true)
+                    .sameSite("Strict")
+                    .path("/")
+                    .maxAge(Duration.ofDays(7))
+                    .build();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return ResponseEntity.ok().body(Map.of("message", "تم تسجيل الدخول بنجاح"));
+            return ResponseEntity.ok().body(Map.of(
+                    "status", "success",
+                    "message", "تم تسجيل الدخول بنجاح"
+            ));
+        } catch (ResponseStatusException e) {
+            throw e; // Let the global exception handler process it
+        } catch (Exception e) {
+            log.error("Login failed", e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "حدث خطأ أثناء تسجيل الدخول"
+            );
+        }
     }
 
     @PostMapping("/logout")
