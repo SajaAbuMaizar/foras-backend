@@ -2,11 +2,13 @@ package portal.forasbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import portal.forasbackend.common.model.User;
 import portal.forasbackend.enums.Gender;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -66,6 +68,13 @@ public class Candidate implements User {
 
     @Builder.Default
     private String role = "ROLE_CANDIDATE";
+
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

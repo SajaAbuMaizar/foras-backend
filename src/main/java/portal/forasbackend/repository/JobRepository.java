@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.enums.JobStatus;
-import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-// fixme do the job repo calude
+
 public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificationExecutor<Job> {
 
     List<Job> findByEmployerId(Long employerId);
@@ -20,15 +20,15 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
     Optional<Job> findByIdWithCandidates(@Param("id") Long id);
 
     @Query("""
-    SELECT j FROM Job j
-    LEFT JOIN FETCH j.translations
-    LEFT JOIN FETCH j.city
-    LEFT JOIN FETCH j.industry
-    WHERE j.id = :id
-""")
+        SELECT j FROM Job j
+        LEFT JOIN FETCH j.translations
+        LEFT JOIN FETCH j.city
+        LEFT JOIN FETCH j.industry
+        WHERE j.id = :id
+    """)
     Optional<Job> findByIdWithDetails(@Param("id") Long id);
 
-    Page<Job> findByStatus(JobStatus status, Pageable pageable);
+    Page<Job> findByStatus(JobStatus status, org.springframework.data.domain.Pageable pageable);
 
     @Query("SELECT j FROM Job j LEFT JOIN FETCH j.translations WHERE j.id = :id")
     Optional<Job> findByIdWithTranslations(@Param("id") Long id);
@@ -39,4 +39,8 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
 
     boolean existsByIdAndEmployerId(Long id, Long employerId);
 
+    // Dashboard methods
+    long countByCreatedAtAfter(LocalDateTime after);
+    long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
+    long countByStatus(JobStatus status);
 }

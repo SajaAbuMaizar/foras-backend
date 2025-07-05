@@ -10,6 +10,8 @@ import portal.forasbackend.common.model.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.time.LocalDateTime;
+
 
 @Data
 @Entity
@@ -28,6 +30,11 @@ public class Employer implements User {
     private String password;
     private String companyLogoUrl;
     private String preferredLanguage; // "ar" or "he"
+
+    private LocalDateTime lastLogin;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
 
     private String role = "ROLE_EMPLOYER";
