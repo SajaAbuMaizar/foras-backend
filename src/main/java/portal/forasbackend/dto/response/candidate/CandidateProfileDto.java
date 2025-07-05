@@ -1,21 +1,27 @@
 package portal.forasbackend.dto.response.candidate;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import portal.forasbackend.enums.Gender;
 
 import java.util.List;
 
-@Builder
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CandidateProfileDto {
-    private Long id;
+    private String id;
     private String name;
     private String phone;
     private String area;
-    private boolean knowsHebrew;
-    private boolean needsHelp;
-    private List<String> driverLicenses;
+    private Gender gender;
+    private Boolean knowsHebrew;
+    private Boolean needsHelp;
     private List<String> skills;
     private List<String> languages;
+    private List<String> driverLicenses;
     private String avatarUrl;
 }

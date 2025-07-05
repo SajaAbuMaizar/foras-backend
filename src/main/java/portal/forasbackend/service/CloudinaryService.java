@@ -69,4 +69,29 @@ public class CloudinaryService {
         }
     }
 
+    public String uploadCandidateAvatar(MultipartFile file) {
+        if (file.isEmpty()) {
+            return null;
+        }
+
+        String uniqueId = UUID.randomUUID().toString();
+        Map<String, Object> uploadParams = ObjectUtils.asMap(
+                "folder", "jobPortal/candidates/avatars",
+                "public_id", "candidate_avatar_" + uniqueId,
+                "transformation", new Transformation()
+                        .width(400)
+                        .height(400)
+                        .crop("fill")
+                        .gravity("face")
+                        .quality("auto:best")
+        );
+
+        try {
+            Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            return uploadResult.get("secure_url").toString();
+        } catch (IOException e) {
+            log.error("Error uploading candidate avatar to Cloudinary", e);
+            throw new RuntimeException("Failed to upload avatar");
+        }
+    }
 }

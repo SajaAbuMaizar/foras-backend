@@ -9,5 +9,6 @@ import portal.forasbackend.entity.Candidate;
 public interface CandidateMapper {
 
     @Mapping(target = "area", source = "city.nameAr")
+    @Mapping(target = "id", expression = "java(String.valueOf(candidate.getId()))")
     CandidateProfileDto toDto(Candidate candidate);
 }
