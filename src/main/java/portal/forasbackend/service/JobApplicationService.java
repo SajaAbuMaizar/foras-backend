@@ -5,15 +5,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import portal.forasbackend.dto.response.job.JobApplicationResponse;
+import portal.forasbackend.entity.ApplicationStatus;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.JobApplication;
 import portal.forasbackend.entity.Job;
+import portal.forasbackend.exception.ResourceNotFoundException;
+import portal.forasbackend.exception.UnauthorizedException;
+import portal.forasbackend.mapper.JobApplicationMapper;
 import portal.forasbackend.repository.CandidateRepository;
 import portal.forasbackend.repository.JobApplicationRepository;
 import portal.forasbackend.repository.JobRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -23,35 +29,34 @@ public class JobApplicationService {
     private final JobApplicationRepository jobApplicationRepo;
     private final JobRepository jobRepo;
     private final CandidateRepository candidateRepo;
+    private final JobApplicationMapper jobApplicationMapper;
 
     @Transactional
     public void applyToJob(Long jobId, Long candidateId) {
+        // Check if already applied first (this is a quick read operation)
+        if (hasAlreadyApplied(jobId, candidateId)) {
+            throw new IllegalStateException("You have already applied to this job");
+        }
+
+        Job job = jobRepo.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
+
+        Candidate candidate = candidateRepo.findById(candidateId)
+                .orElseThrow(() -> new RuntimeException("Candidate not found with id: " + candidateId));
+
+        JobApplication application = JobApplication.builder()
+                .job(job)
+                .candidate(candidate)
+                .status(ApplicationStatus.PENDING) // Set default status
+                .build();
+
         try {
-            // Check if already applied
-            if (hasAlreadyApplied(jobId, candidateId)) {
-                throw new IllegalStateException("Already applied to this job");
-            }
-
-            Job job = jobRepo.findById(jobId)
-                    .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
-
-            Candidate candidate = candidateRepo.findById(candidateId)
-                    .orElseThrow(() -> new RuntimeException("Candidate not found with id: " + candidateId));
-
-            JobApplication application = JobApplication.builder()
-                    .job(job)
-                    .candidate(candidate)
-                    .build();
-
             jobApplicationRepo.save(application);
             log.info("Successfully created job application for candidate {} to job {}", candidateId, jobId);
-
         } catch (DataIntegrityViolationException e) {
+            // This handles cases where a concurrent request created the application
             log.warn("Duplicate application attempt for candidate {} to job {}", candidateId, jobId);
-            throw new IllegalStateException("Already applied to this job");
-        } catch (Exception e) {
-            log.error("Error creating job application for candidate {} to job {}: {}", candidateId, jobId, e.getMessage(), e);
-            throw new RuntimeException("Failed to submit application: " + e.getMessage());
+            throw new IllegalStateException("You have already applied to this job");
         }
     }
 
@@ -78,5 +83,33 @@ public class JobApplicationService {
 
     public List<JobApplication> findByCandidate(Candidate candidate) {
         return jobApplicationRepo.findByCandidate(candidate);
+    }
+
+    @Transactional(readOnly = true)
+    public List<JobApplicationResponse> getApplicationsForJob(Long jobId, Long employerId) {
+        // Verify the job belongs to the employer
+        if (!jobRepo.existsByIdAndEmployerId(jobId, employerId)) {
+            throw new UnauthorizedException("You don't have access to this job's applications");
+        }
+
+        List<JobApplication> applications = jobApplicationRepo.findByJobId(jobId);
+
+        return applications.stream()
+                .map(jobApplicationMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateApplicationStatus(Long applicationId, ApplicationStatus status, Long employerId) {
+        JobApplication application = jobApplicationRepo.findById(applicationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found"));
+
+        // Verify the application's job belongs to the employer
+        if (!application.getJob().getEmployer().getId().equals(employerId)) {
+            throw new UnauthorizedException("You don't have access to this application");
+        }
+
+        application.setStatus(status);
+        jobApplicationRepo.save(application);
     }
 }

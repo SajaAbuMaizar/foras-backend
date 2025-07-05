@@ -3,26 +3,40 @@ package portal.forasbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"job_id", "candidate_id"}))
 public class JobApplication {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidate_id", nullable = false)
     private Candidate candidate;
 
-    private long appliedAt;
+    @Column(columnDefinition = "TEXT")
+    private String coverLetter;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ApplicationStatus status = ApplicationStatus.PENDING;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
     @PrePersist
-    public void prePersist() {
-        this.appliedAt = System.currentTimeMillis();
-    }}
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+}

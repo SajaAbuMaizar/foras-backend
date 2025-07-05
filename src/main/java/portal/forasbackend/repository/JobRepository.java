@@ -37,4 +37,6 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
 
     List<Job> findByEmployerIdOrderByCreatedAtDesc(Long employerId);
 
+    boolean existsByIdAndEmployerId(Long id, Long employerId);
+
 }

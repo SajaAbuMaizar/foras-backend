@@ -2,9 +2,13 @@ package portal.forasbackend.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import portal.forasbackend.dto.request.UpdateStatusRequest;
+import portal.forasbackend.dto.response.job.JobApplicationResponse;
 import portal.forasbackend.dto.response.job.MainPageJobListResponse;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.entity.Employer;
@@ -52,18 +56,15 @@ public class JobApplicationController {
                 return ResponseEntity.badRequest().body(Map.of("message", "This job is not available for applications"));
             }
 
-            Long candidateId = candidate.getId();
+            jobApplicationService.applyToJob(jobId, candidate.getId());
 
-            // Check if already applied
-            if (jobApplicationService.hasAlreadyApplied(jobId, candidateId)) {
-                return ResponseEntity.status(409).body(Map.of("message", "You have already applied to this job"));
-            }
-
-            jobApplicationService.applyToJob(jobId, candidateId);
-
-            log.info("Successfully applied candidate {} to job {}", candidateId, jobId);
+            log.info("Successfully applied candidate {} to job {}", candidate.getId(), jobId);
             return ResponseEntity.ok().body(Map.of("message", "Application submitted successfully"));
 
+        } catch (DataIntegrityViolationException e) {
+            log.warn("Duplicate application attempt for candidate {} to job {}",
+                    candidate != null ? candidate.getId() : "null", jobId);
+            return ResponseEntity.status(409).body(Map.of("message", "You have already applied to this job"));
         } catch (IllegalStateException e) {
             log.warn("Application conflict for candidate {} and job {}: {}",
                     candidate != null ? candidate.getId() : "null", jobId, e.getMessage());
@@ -126,17 +127,23 @@ public class JobApplicationController {
     public ResponseEntity<List<MainPageJobListResponse>> getAppliedJobsForCandidate(
             @AuthenticationPrincipal Candidate candidate
     ) {
+        System.out.println("Fetching applied jobs for candidate: " + (candidate != null ? candidate.getId() : "null"));
         try {
             if (candidate == null) {
                 return ResponseEntity.status(401).build();
             }
+            System.out.println("Candidate ID: " + candidate.getId());
 
             // 1. Find candidate by user id
             Candidate foundCandidate = jobApplicationService.findCandidateByUserId(candidate.getId())
                     .orElseThrow(() -> new RuntimeException("Candidate not found"));
 
+            System.out.println("Found candidate: " + foundCandidate.getId());
+
             // 2. Find all job applications for candidate
             List<JobApplication> applications = jobApplicationService.findByCandidate(foundCandidate);
+
+            System.out.println("Found " + applications.size() + " applications for candidate " + foundCandidate.getId());
 
             // 3. Convert jobs to DTOs for frontend
             List<MainPageJobListResponse> jobs = applications.stream()
@@ -146,6 +153,8 @@ public class JobApplicationController {
                     .filter(Objects::nonNull)
                     .toList();
 
+            System.out.println("Converted applications to DTOs, total jobs: " + jobs.size());
+
             return ResponseEntity.ok(jobs);
 
         } catch (Exception e) {
@@ -153,5 +162,33 @@ public class JobApplicationController {
                     candidate != null ? candidate.getId() : "null", e.getMessage(), e);
             return ResponseEntity.status(500).build();
         }
+    }
+
+    @PreAuthorize("hasRole('EMPLOYER')")
+    @GetMapping("/job/{jobId}/applications")
+    public ResponseEntity<List<JobApplicationResponse>> getJobApplications(
+            @PathVariable Long jobId,
+            @AuthenticationPrincipal Employer employer) {
+
+        List<JobApplicationResponse> applications =
+                jobApplicationService.getApplicationsForJob(jobId, employer.getId());
+
+        return ResponseEntity.ok(applications);
+    }
+
+    @PreAuthorize("hasRole('EMPLOYER')")
+    @PatchMapping("/{applicationId}/status")
+    public ResponseEntity<Void> updateApplicationStatus(
+            @PathVariable Long applicationId,
+            @RequestBody UpdateStatusRequest request,
+            @AuthenticationPrincipal Employer employer) {
+
+        jobApplicationService.updateApplicationStatus(
+                applicationId,
+                request.getStatus(),
+                employer.getId()
+        );
+
+        return ResponseEntity.ok().build();
     }
 }
