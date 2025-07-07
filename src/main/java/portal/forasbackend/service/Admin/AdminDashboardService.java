@@ -11,6 +11,8 @@ import portal.forasbackend.dto.response.admin.CityCountDto;
 import portal.forasbackend.enums.Gender;
 import portal.forasbackend.enums.JobStatus;
 import portal.forasbackend.repository.*;
+import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
+import portal.forasbackend.repository.ContactMessageRepository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -28,9 +30,11 @@ public class AdminDashboardService {
     private final JobRepository jobRepository;
     private final MessageRepository messageRepository;
     private final ActivityLogRepository activityLogRepository;
+    private final ContactMessageRepository contactMessageRepository;
 
     public DashboardStatsResponse getDashboardStats() {
-        log.info("Fetching dashboard statistics");
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime lastMonth = now.minusMonths(1);
 
         // Candidates stats
         long totalCandidates = candidateRepository.count();
@@ -102,6 +106,17 @@ public class AdminDashboardService {
 
         double messageResponseRate = calculateMessageResponseRate();
 
+        // Contact Messages Stats
+        long totalContactMessages = contactMessageRepository.count();
+        long lastMonthContactMessages = contactMessageRepository.countByCreatedAtAfter(lastMonth);
+        double contactMessagesChange = calculatePercentageChange(lastMonthContactMessages, totalContactMessages - lastMonthContactMessages);
+
+        long newContactMessages = contactMessageRepository.countByStatus(ContactMessageStatus.NEW);
+        long inProgressMessages = contactMessageRepository.countByStatus(ContactMessageStatus.IN_PROGRESS);
+        long doneMessages = contactMessageRepository.countByStatus(ContactMessageStatus.DONE);
+        long archivedContactMessages = contactMessageRepository.countByStatus(ContactMessageStatus.ARCHIVED);
+
+
         // Active users
         long activeUsers = candidateRepository.countByLastLoginAfter(
                 LocalDateTime.now().minusDays(1)) +
@@ -139,6 +154,12 @@ public class AdminDashboardService {
                 .archivedMessages(archivedMessages)
                 .deletedMessages(deletedMessages)
                 .messageResponseRate(messageResponseRate)
+                .totalContactMessages(totalContactMessages)
+                .contactMessagesChange(contactMessagesChange)
+                .newContactMessages(newContactMessages)
+                .inProgressContactMessages(inProgressMessages)
+                .doneContactMessages(doneMessages)
+                .archivedContactMessages(archivedContactMessages)
                 // Activity
                 .activeUsers(activeUsers)
                 .lastUpdated(LocalDateTime.now().toString())

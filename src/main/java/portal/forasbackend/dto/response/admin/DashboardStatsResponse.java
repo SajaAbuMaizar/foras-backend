@@ -37,7 +37,7 @@ public class DashboardStatsResponse {
     private long pendingJobs;
     private long rejectedJobs;
 
-    // Messages
+    // Messages (existing)
     private long totalMessages;
     private double messagesChange;
     private long newMessages;
@@ -45,6 +45,14 @@ public class DashboardStatsResponse {
     private long archivedMessages;
     private long deletedMessages;
     private double messageResponseRate;
+
+    // Contact Messages (new)
+    private long totalContactMessages;
+    private double contactMessagesChange;
+    private long newContactMessages;
+    private long inProgressContactMessages;
+    private long doneContactMessages;
+    private long archivedContactMessages;
 
     // Activity
     private long activeUsers;

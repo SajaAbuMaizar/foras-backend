@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints
                         .requestMatchers(
+                                "/api/contact/send-message",
                                 "/api/auth/**",
                                 "/api/job",
                                 "/api/job/search",
