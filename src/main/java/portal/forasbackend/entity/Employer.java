@@ -2,6 +2,7 @@ package portal.forasbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "employers")
@@ -32,6 +34,9 @@ public class Employer implements User {
     private String preferredLanguage; // "ar" or "he"
 
     private LocalDateTime lastLogin;
+
+    @Column(name = "is_seed_data", nullable = false)
+    private boolean isSeedData = false;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

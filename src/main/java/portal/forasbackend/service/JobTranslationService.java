@@ -98,4 +98,10 @@ public class JobTranslationService {
     public List<JobTranslation> getAllTranslationsForJob(Long jobId) {
         return translationRepository.findByJobId(jobId);
     }
+
+    @Transactional
+    public void save(JobTranslation translation) {
+        translationRepository.save(translation);
+    }
+
 }

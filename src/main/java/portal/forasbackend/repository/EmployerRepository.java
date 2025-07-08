@@ -19,6 +19,8 @@ public interface EmployerRepository extends JpaRepository<Employer, Long> {
     long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
     long countByLastLoginAfter(LocalDateTime after);
 
+    Optional<Employer> findByCompanyName(String companyName);
+
     // Top cities with employer count (city name, count)
 //    @Query(value = "SELECT c.name, COUNT(e.id) FROM employers e JOIN city c ON e.city_id = c.id GROUP BY c.name ORDER BY COUNT(e.id) DESC LIMIT :limit", nativeQuery = true)
 //    List<Object[]> findTopCitiesWithEmployerCount(@org.springframework.data.repository.query.Param("limit") int limit);
