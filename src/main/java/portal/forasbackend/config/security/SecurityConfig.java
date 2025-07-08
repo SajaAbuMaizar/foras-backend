@@ -85,7 +85,7 @@ public class SecurityConfig {
 
                         // Candidate endpoints
                         .requestMatchers("/api/candidate/**").hasRole("CANDIDATE")
-                        .requestMatchers("/api/job-applications/**").hasRole("CANDIDATE")
+                        .requestMatchers("/api/job-applications/**").hasAnyRole("CANDIDATE", "EMPLOYER")
 
                         // Employer endpoints
                         .requestMatchers("/api/employer/**").hasRole("EMPLOYER")

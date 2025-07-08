@@ -164,7 +164,7 @@ public class JobApplicationController {
         }
     }
 
-    @PreAuthorize("hasRole('EMPLOYER')")
+   // @PreAuthorize("hasRole('EMPLOYER')")
     @GetMapping("/job/{jobId}/applications")
     public ResponseEntity<List<JobApplicationResponse>> getJobApplications(
             @PathVariable Long jobId,
