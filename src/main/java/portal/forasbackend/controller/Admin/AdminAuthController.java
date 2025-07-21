@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import portal.forasbackend.dto.request.admin.AdminAuthRequest;
 import portal.forasbackend.entity.Admin;
 import portal.forasbackend.exception.technical.AuthException;
@@ -48,7 +51,7 @@ public class AdminAuthController {
                     .secure(true) // Enable in production with HTTPS
                     .sameSite("Lax")
                     .path("/")
-                    .maxAge(Duration.ofDays(1)) // 1 day expiration
+                    .maxAge(Duration.ofDays(1)) // 1-day expiration
                     .build();
 
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());

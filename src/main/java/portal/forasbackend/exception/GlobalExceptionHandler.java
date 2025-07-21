@@ -1,5 +1,6 @@
 package portal.forasbackend.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.server.ResponseStatusException;
-import portal.forasbackend.exception.business.*;
+import portal.forasbackend.exception.business.CityNotFoundException;
+import portal.forasbackend.exception.business.InvalidGenderException;
+import portal.forasbackend.exception.business.PhoneExistsException;
 import portal.forasbackend.exception.technical.AuthException;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -125,6 +126,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(errorResponse);
     }
+
     //fixme
 //    2025-06-29T01:27:10.335+03:00 ERROR 56333 --- [foras-backend] [nio-8080-exec-2] p.f.exception.GlobalExceptionHandler     : Unexpected error occurred
 //
@@ -161,4 +163,20 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponse);
     }
+
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<ErrorResponse> handleFileUploadException(
+            FileUploadException ex, WebRequest request) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("File Upload Error")
+                .message(ex.getMessage())
+                .path(request.getDescription(false).replace("uri=", ""))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+
 }

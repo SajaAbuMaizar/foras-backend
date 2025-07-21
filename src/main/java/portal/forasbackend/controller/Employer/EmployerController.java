@@ -1,19 +1,20 @@
 package portal.forasbackend.controller.Employer;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import portal.forasbackend.dto.request.employer.LanguageChangeRequest;
+import portal.forasbackend.dto.response.FileUploadResponse;
 import portal.forasbackend.entity.Employer;
+import portal.forasbackend.exception.FileUploadException;
 import portal.forasbackend.service.Employer.EmployerService;
 
-import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/employer")
 @RequiredArgsConstructor
@@ -22,16 +23,35 @@ public class EmployerController {
 
     @PostMapping("/upload-logo")
     @PreAuthorize("hasRole('EMPLOYER')")
-    public ResponseEntity<?> uploadLogo(
+    public ResponseEntity<FileUploadResponse> uploadLogo(
             @RequestParam("logo") MultipartFile file,
             @AuthenticationPrincipal Employer employer) {
+        log.info("Uploading logo for employer: {}", employer.getCompanyName());
 
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("File is empty");
+        try {
+            String logoUrl = employerService.saveLogoForEmployer(employer.getPhone(), file);
+            return ResponseEntity.ok(FileUploadResponse.builder()
+                    .success(true)
+                    .url(logoUrl)
+                    .message("تم رفع الشعار بنجاح")
+                    .build());
+        } catch (FileUploadException e) {
+            log.error("File upload error for employer {}: {}", employer.getCompanyName(), e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(FileUploadResponse.builder()
+                            .success(false)
+                            .message(e.getMessage())
+                            .errorCode(e.getErrorCode())
+                            .build());
+        } catch (Exception e) {
+            log.error("Unexpected error uploading logo for employer {}", employer.getCompanyName(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(FileUploadResponse.builder()
+                            .success(false)
+                            .message("حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى")
+                            .errorCode("UNEXPECTED_ERROR")
+                            .build());
         }
-
-        employerService.saveLogoForEmployer(employer.getPhone(), file);
-        return ResponseEntity.ok().body("Logo uploaded successfully");
     }
 
     @PreAuthorize("hasRole('EMPLOYER')")
@@ -41,6 +61,4 @@ public class EmployerController {
         employerService.save(employer);
         return ResponseEntity.ok().build();
     }
-
-
 }

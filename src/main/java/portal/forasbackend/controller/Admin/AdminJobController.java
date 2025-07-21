@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +14,7 @@ import portal.forasbackend.dto.request.admin.AdminJobRequest;
 import portal.forasbackend.dto.response.admin.JobListResponse;
 import portal.forasbackend.entity.Admin;
 import portal.forasbackend.entity.Job;
+import portal.forasbackend.exception.FileUploadException;
 import portal.forasbackend.service.Admin.AdminJobService;
 
 import java.util.List;
@@ -43,9 +44,9 @@ public class AdminJobController {
         }
     }
 
-    @PostMapping(path = "/create-seed", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Create seed job", description = "Create a job with fake employer for populating the portal")
-    public ResponseEntity<?> createSeedJob(
+    @PostMapping("/seed-job")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> createSeedJob(
             @RequestParam("jobTitle") String jobTitle,
             @RequestParam("jobDescription") String jobDescription,
             @RequestParam("language") String language,
@@ -58,7 +59,7 @@ public class AdminJobController {
             @RequestParam(value = "companyDescription", required = false) String companyDescription,
             @RequestParam(value = "companyPhone") String companyPhone,
             @RequestParam(value = "companyEmail") String companyEmail,
-            @RequestParam(value = "companyLogoFile") MultipartFile companyLogoFile,
+            @RequestParam(value = "companyLogoFile", required = false) MultipartFile companyLogoFile,
             @RequestParam(value = "transportation", defaultValue = "false") boolean transportation,
             @RequestParam(value = "hebrew", defaultValue = "false") boolean hebrew,
             @RequestParam(value = "autoApprove", defaultValue = "true") boolean autoApprove,
@@ -91,13 +92,20 @@ public class AdminJobController {
             return ResponseEntity.ok(Map.of(
                     "success", true,
                     "jobId", createdJob.getId(),
-                    "message", "Seed job created successfully"
+                    "message", "تم إنشاء الوظيفة بنجاح"
+            ));
+        } catch (FileUploadException e) {
+            log.error("File upload error creating seed job: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "success", false,
+                    "message", e.getMessage(),
+                    "errorCode", e.getErrorCode()
             ));
         } catch (Exception e) {
             log.error("Error creating seed job: {}", e.getMessage(), e);
-            return ResponseEntity.status(500).body(Map.of(
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
                     "success", false,
-                    "message", "Failed to create seed job: " + e.getMessage()
+                    "message", "فشل في إنشاء الوظيفة: " + e.getMessage()
             ));
         }
     }
