@@ -25,8 +25,8 @@ public class AdminJobRequest {
     @NotNull(message = "City ID is required")
     private Long cityId;
 
-    @NotBlank(message = "Job type is required")
-    private String jobType;
+    @NotNull(message = "Job type is required")
+    private Long jobTypeId;
 
     @NotNull(message = "Industry ID is required")
     private Long industryId;

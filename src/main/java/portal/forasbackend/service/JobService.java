@@ -13,15 +13,9 @@ import portal.forasbackend.dto.response.job.*;
 import portal.forasbackend.entity.*;
 import portal.forasbackend.enums.JobStatus;
 import portal.forasbackend.mapper.JobMapper;
-import portal.forasbackend.repository.CityRepository;
-import portal.forasbackend.repository.EmployerRepository;
-import portal.forasbackend.repository.IndustryRepository;
-import portal.forasbackend.repository.JobRepository;
+import portal.forasbackend.repository.*;
 import portal.forasbackend.repository.specification.JobSpecification;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,6 +28,7 @@ public class JobService {
     private final JobRepository jobRepository;
     private final CityRepository cityRepository;
     private final IndustryRepository industryRepository;
+    private final JobTypeRepository jobTypeRepository;
     private final EmployerRepository employerRepository;
     private final JobTranslationService jobTranslationService;
     private final CloudinaryService cloudinaryService;
@@ -43,40 +38,49 @@ public class JobService {
         return jobRepository.findById(jobId);
     }
 
+    @Transactional
     public Job createJob(JobRequest request, MultipartFile jobImage, String employerPhone) {
         City city = cityRepository.findById(request.getCityId())
-                .orElseThrow(() -> new RuntimeException("City not found"));
+                .orElseThrow(() -> new EntityNotFoundException("City not found"));
 
         Industry industry = industryRepository.findById(request.getIndustryId())
-                .orElseThrow(() -> new RuntimeException("Industry not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Industry not found"));
+
+        JobType jobType = jobTypeRepository.findById(request.getJobTypeId())
+                .orElseThrow(() -> new EntityNotFoundException("Work type not found"));
 
         Employer employer = employerRepository.findByPhone(employerPhone)
-                .orElseThrow(() -> new RuntimeException("Employer not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Employer not found"));
 
+        // Upload image to Cloudinary
         String imageUrl = cloudinaryService.uploadJobImage(jobImage);
 
         Job job = Job.builder()
                 .salary(request.getSalary())
-                .jobType(request.getJobType())
+                .jobType(jobType)
                 .imageUrl(imageUrl)
                 .transportationAvailable(request.isTransportation())
                 .hebrewRequired(request.isHebrew())
                 .city(city)
                 .industry(industry)
                 .employer(employer)
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .status(JobStatus.PENDING)
                 .build();
 
-        Job savedJob = jobRepository.save(job);
+        job = jobRepository.save(job);
 
+        // Create original translation
         jobTranslationService.createOriginal(
-                savedJob,
+                job,
                 request.getLanguage(),
                 request.getJobTitle(),
                 request.getJobDescription(),
                 request.getRequiredQualifications()
-        ); // ✅ delegated logic
+        );
 
-        return savedJob;
+        return job;
     }
 
 
@@ -92,7 +96,6 @@ public class JobService {
 
         return new PageImpl<>(responses, pageable, approvedJobs.getTotalElements());
     }
-
 
 
     public List<EmployerDashboardJobListResponse> findByEmployerId(Long employerId) {
@@ -127,7 +130,6 @@ public class JobService {
 
         return AdminJobDetailsResponse.from(job);
     }
-
 
 
     public Page<MainPageJobListResponse> searchJobs(

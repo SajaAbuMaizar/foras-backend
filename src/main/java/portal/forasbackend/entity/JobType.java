@@ -12,13 +12,14 @@ import portal.forasbackend.common.model.LocalizableEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Industry implements LocalizableEntity {
+public class JobType implements LocalizableEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String code;
+    @Column(nullable = false, unique = true)
+    private String code; // e.g., FULL_TIME, PART_TIME
 
     @Column(nullable = false)
     private String nameAr;
@@ -35,5 +36,4 @@ public class Industry implements LocalizableEntity {
     public String getNameHe() {
         return nameHe;
     }
-
 }

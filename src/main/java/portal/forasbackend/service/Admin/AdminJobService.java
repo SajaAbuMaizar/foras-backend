@@ -2,7 +2,6 @@ package portal.forasbackend.service.Admin;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,7 @@ public class AdminJobService {
     private final EmployerRepository employerRepository;
     private final CityRepository cityRepository;
     private final IndustryRepository industryRepository;
+    private final JobTypeRepository jobTypeRepository;
     private final JobTranslationService jobTranslationService;
     private final CloudinaryService cloudinaryService;
     private final AdminRepository adminRepository;
@@ -73,7 +73,7 @@ public class AdminJobService {
         // Create or find employer
         Employer employer = findOrCreateSeedEmployer(request, companyLogoUrl);
 
-        // Create job
+        // Create a job
         Job job = createJobFromAdminRequest(request, employer, jobImage);
 
         job = jobRepository.save(job);
@@ -131,6 +131,9 @@ public class AdminJobService {
         Industry industry = industryRepository.findById(request.getIndustryId())
                 .orElseThrow(() -> new RuntimeException("Industry not found"));
 
+        JobType jobType = jobTypeRepository.findById(request.getJobTypeId())
+                .orElseThrow(() -> new RuntimeException("Job type not found"));
+
         String imageUrl = null;
         if (jobImage != null && !jobImage.isEmpty()) {
             imageUrl = cloudinaryService.uploadJobImage(jobImage);
@@ -141,7 +144,7 @@ public class AdminJobService {
                 .city(city)
                 .industry(industry)
                 .salary(request.getSalary())
-                .jobType(request.getJobType())
+                .jobType(jobType)
                 .imageUrl(imageUrl)
                 .transportationAvailable(request.isTransportation())
                 .hebrewRequired(request.isHebrew())

@@ -51,7 +51,7 @@ public class AdminJobController {
             @RequestParam("jobDescription") String jobDescription,
             @RequestParam("language") String language,
             @RequestParam("cityId") Long cityId,
-            @RequestParam("jobType") String jobType,
+            @RequestParam("jobType") Long jobType,
             @RequestParam("industryId") Long industryId,
             @RequestParam("salary") String salary,
             @RequestParam("requiredQualifications") String requiredQualifications,
@@ -74,7 +74,7 @@ public class AdminJobController {
                     .jobDescription(jobDescription)
                     .language(language)
                     .cityId(cityId)
-                    .jobType(jobType)
+                    .jobTypeId(jobType)
                     .industryId(industryId)
                     .salary(salary)
                     .requiredQualifications(requiredQualifications)

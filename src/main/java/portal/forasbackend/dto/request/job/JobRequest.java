@@ -1,14 +1,20 @@
 package portal.forasbackend.dto.request.job;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class JobRequest {
     private String jobTitle;
     private String jobDescription;
-    private String language; // "he" or "ar"
+    private String language;
     private Long cityId;
-    private String jobType;
+    private Long jobTypeId;
     private Long industryId;
     private String salary;
     private String requiredQualifications;

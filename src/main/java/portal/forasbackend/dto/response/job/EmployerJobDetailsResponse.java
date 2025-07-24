@@ -4,8 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import portal.forasbackend.dto.LocalizedNameDto;
 import portal.forasbackend.dto.response.candidate.CandidateDto;
-import portal.forasbackend.entity.Candidate;
-import portal.forasbackend.entity.City;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.entity.JobTranslation;
 import portal.forasbackend.enums.JobStatus;
@@ -21,7 +19,7 @@ public class EmployerJobDetailsResponse {
     private String salary;
     private String jobTitle;
     private String jobDescription;
-    private String jobType;
+    private LocalizedNameDto jobType;
     private String requiredQualifications;
     private boolean hebrewRequired;
     private boolean transportationAvailable;
@@ -30,7 +28,6 @@ public class EmployerJobDetailsResponse {
     private LocalizedNameDto cityName;
     private List<CandidateDto> candidates;
     private JobStatus status;
-
 
     public static EmployerJobDetailsResponse from(Job job) {
         // Find the original translation (assuming only one original per job)
@@ -43,14 +40,13 @@ public class EmployerJobDetailsResponse {
         String description = originalTranslation != null ? originalTranslation.getDescription() : "";
         String requiredQualifications = originalTranslation != null ? originalTranslation.getRequiredQualifications() : "";
 
-
         return EmployerJobDetailsResponse.builder()
                 .id(job.getId())
                 .imageUrl(job.getImageUrl())
                 .salary(job.getSalary())
                 .jobTitle(title)
                 .jobDescription(description)
-                .jobType(job.getJobType())
+                .jobType(LocalizedNameDto.from(job.getJobType()))
                 .requiredQualifications(requiredQualifications)
                 .hebrewRequired(job.isHebrewRequired())
                 .transportationAvailable(job.isTransportationAvailable())
@@ -67,5 +63,4 @@ public class EmployerJobDetailsResponse {
                         .collect(Collectors.toList()))
                 .build();
     }
-
 }

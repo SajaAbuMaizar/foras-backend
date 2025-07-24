@@ -1,0 +1,56 @@
+[
+  {
+    "code": "FULL_TIME",
+    "nameEn": "Full Time",
+    "nameAr": "دوام كامل",
+    "nameHe": "משרה מלאה"
+  },
+  {
+    "code": "PART_TIME",
+    "nameEn": "Part Time",
+    "nameAr": "دوام جزئي",
+    "nameHe": "משרה חלקית"
+  },
+  {
+    "code": "CONTRACT",
+    "nameEn": "Contract",
+    "nameAr": "عقد",
+    "nameHe": "חוזה"
+  },
+  {
+    "code": "FREELANCE",
+    "nameEn": "Freelance",
+    "nameAr": "عمل حر",
+    "nameHe": "פרילנס"
+  },
+  {
+    "code": "TEMPORARY",
+    "nameEn": "Temporary",
+    "nameAr": "مؤقت",
+    "nameHe": "זמני"
+  },
+  {
+    "code": "INTERNSHIP",
+    "nameEn": "Internship",
+    "nameAr": "تدريب",
+    "nameHe": "התמחות"
+  },
+  {
+    "code": "SHIFT_WORK",
+    "nameEn": "Shift Work",
+    "nameAr": "عمل بالورديات",
+    "nameHe": "עבודה במשמרות"
+  },
+  {
+    "code": "REMOTE",
+    "nameEn": "Remote",
+    "nameAr": "عمل عن بعد",
+    "nameHe": "עבודה מרחוק"
+  },
+  {
+    "code": "HYBRID",
+    "nameEn": "Hybrid",
+    "nameAr": "عمل هيبريد",
+    "nameHe": "עבודה היברידית"
+  }
+]

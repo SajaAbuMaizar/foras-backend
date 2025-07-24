@@ -1,7 +1,10 @@
 package portal.forasbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import portal.forasbackend.enums.JobStatus;
 
 import java.time.LocalDate;
@@ -19,7 +22,7 @@ public class Job {
     private Long id;
 
     private String salary;
-    private String jobType;
+
     private String imageUrl;
     private boolean transportationAvailable;
     private boolean hebrewRequired;
@@ -29,6 +32,9 @@ public class Job {
 
     @ManyToOne
     private Industry industry;
+
+    @ManyToOne
+    private JobType jobType;
 
     @ManyToOne
     private Employer employer;
@@ -47,7 +53,6 @@ public class Job {
     private JobStatus status = JobStatus.PENDING;
 
     private String rejectionReason;
-
 
     private LocalDateTime approvedAt;
 
@@ -74,7 +79,6 @@ public class Job {
         }
     }
 
-
     public boolean isVisible() {
         return this.status == JobStatus.APPROVED;
     }
@@ -96,5 +100,4 @@ public class Job {
     public void updatePublishDate() {
         this.publishDate = LocalDate.now();
     }
-
 }

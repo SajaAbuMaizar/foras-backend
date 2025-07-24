@@ -2,13 +2,12 @@ package portal.forasbackend.dto.response.job;
 
 import lombok.Builder;
 import lombok.Data;
-import java.time.format.DateTimeFormatter;
 import portal.forasbackend.dto.LocalizedNameDto;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.entity.JobTranslation;
 import portal.forasbackend.enums.JobStatus;
 
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Builder
@@ -16,7 +15,7 @@ public class AdminJobDetailsResponse {
     private Long id;
     private String imageUrl;
     private String salary;
-    private String jobType;
+    private LocalizedNameDto jobType;
     private boolean transportationAvailable;
     private boolean hebrewRequired;
     private String createdAt;
@@ -31,7 +30,6 @@ public class AdminJobDetailsResponse {
     private String qualificationsTranslated;
 
     private JobStatus status;
-
 
     public static AdminJobDetailsResponse from(Job job) {
         JobTranslation original = job.getTranslations().stream()
@@ -49,7 +47,7 @@ public class AdminJobDetailsResponse {
                 .id(job.getId())
                 .imageUrl(job.getImageUrl())
                 .salary(job.getSalary())
-                .jobType(job.getJobType())
+                .jobType(LocalizedNameDto.from(job.getJobType()))
                 .transportationAvailable(job.isTransportationAvailable())
                 .hebrewRequired(job.isHebrewRequired())
                 .createdAt(formattedCreatedAt)
