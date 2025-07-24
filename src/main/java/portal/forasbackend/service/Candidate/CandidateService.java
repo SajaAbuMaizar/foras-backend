@@ -2,10 +2,12 @@ package portal.forasbackend.service.Candidate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
+import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
 import portal.forasbackend.entity.Candidate;
 import portal.forasbackend.exception.business.NotFoundException;
@@ -23,6 +25,7 @@ public class CandidateService {
     private final CandidateRepository candidateRepository;
     private final CandidateMapper candidateMapper;
     private final CloudinaryService cloudinaryService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public Optional<Candidate> findById(Long candidateId) {
         return candidateRepository.findById(candidateId);
@@ -43,13 +46,10 @@ public class CandidateService {
         Candidate candidate = candidateRepository.findById(candidateId)
                 .orElseThrow(() -> new NotFoundException("Candidate not found"));
 
-        // Update fields
         candidate.setName(request.getName());
         candidate.setGender(request.getGender());
         candidate.setKnowsHebrew(request.getKnowsHebrew());
         candidate.setNeedsHelp(request.getNeedsHelp());
-
-        // Update collections
         candidate.setSkills(request.getSkills());
         candidate.setLanguages(request.getLanguages());
         candidate.setDriverLicenses(request.getDriverLicenses());
@@ -58,6 +58,25 @@ public class CandidateService {
         log.info("Updated profile for candidate: {}", candidateId);
 
         return candidateMapper.toDto(savedCandidate);
+    }
+
+    @Transactional
+    public void updateCredentials(Long candidateId, UpdateCredentialsRequest request) {
+        Candidate candidate = candidateRepository.findById(candidateId)
+                .orElseThrow(() -> new NotFoundException("Candidate not found"));
+
+        candidate.setName(request.getName());
+
+        if (request.getCurrentPassword() != null && request.getNewPassword() != null) {
+            if (!passwordEncoder.matches(request.getCurrentPassword(), candidate.getPassword())) {
+                throw new IllegalArgumentException("كلمة المرور الحالية غير صحيحة");
+            }
+            candidate.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            log.info("Updated password for candidate: {}", candidateId);
+        }
+
+        candidateRepository.save(candidate);
+        log.info("Updated credentials for candidate: {}", candidateId);
     }
 
     @Transactional

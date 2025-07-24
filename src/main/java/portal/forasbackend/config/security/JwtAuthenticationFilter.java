@@ -29,8 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final EmployerService employerService;
-    private final CandidateService candidateService;
     private final AdminAuthService adminService;
+    private final CandidateService candidateService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -60,8 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }
-                }
-                else if ("ROLE_CANDIDATE".equals(claims.userType())) {
+                } else if ("ROLE_CANDIDATE".equals(claims.userType())) {
                     Candidate candidate = candidateService.findById(claims.userId()).orElse(null);
                     if (candidate != null) {
                         UsernamePasswordAuthenticationToken auth =
@@ -69,9 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }
-                }
-
-                 else if ("ROLE_SUPER_ADMIN".equals(claims.userType())) {
+                } else if ("ROLE_SUPER_ADMIN".equals(claims.userType())) {
                     Admin admin = adminService.findById(claims.userId()).orElse(null);
                     if (admin != null) {
                         UsernamePasswordAuthenticationToken auth =

@@ -1,20 +1,21 @@
+// src/main/java/portal/forasbackend/controller/Candidate/CandidateController.java
 package portal.forasbackend.controller.Candidate;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
-import portal.forasbackend.dto.response.FileUploadResponse;
+import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
 import portal.forasbackend.entity.Candidate;
-import portal.forasbackend.exception.FileUploadException;
 import portal.forasbackend.service.Candidate.CandidateService;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -49,36 +50,37 @@ public class CandidateController {
         return ResponseEntity.ok(updatedProfile);
     }
 
+    @PutMapping("/me/update-credentials")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public ResponseEntity<?> updateCredentials(
+            @AuthenticationPrincipal Candidate candidate,
+            @Valid @RequestBody UpdateCredentialsRequest request) {
+        log.info("Updating credentials for candidate: {}", candidate.getId());
+
+        try {
+            candidateService.updateCredentials(candidate.getId(), request);
+            return ResponseEntity.ok(Map.of("message", "تم تحديث البيانات بنجاح"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
     @PostMapping("/me/avatar")
     @PreAuthorize("hasRole('CANDIDATE')")
-    public ResponseEntity<FileUploadResponse> uploadAvatar(
+    public ResponseEntity<Map<String, String>> uploadAvatar(
             @AuthenticationPrincipal Candidate candidate,
             @RequestParam("avatar") MultipartFile file) {
         log.info("Uploading avatar for candidate: {}", candidate.getId());
 
-        try {
-            String avatarUrl = candidateService.updateCandidateAvatar(candidate.getId(), file);
-            return ResponseEntity.ok(FileUploadResponse.builder()
-                    .success(true)
-                    .url(avatarUrl)
-                    .message("تم رفع الصورة الشخصية بنجاح")
-                    .build());
-        } catch (FileUploadException e) {
-            log.error("File upload error for candidate {}: {}", candidate.getId(), e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(FileUploadResponse.builder()
-                            .success(false)
-                            .message(e.getMessage())
-                            .errorCode(e.getErrorCode())
-                            .build());
-        } catch (Exception e) {
-            log.error("Unexpected error uploading avatar for candidate {}", candidate.getId(), e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(FileUploadResponse.builder()
-                            .success(false)
-                            .message("حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى")
-                            .errorCode("UNEXPECTED_ERROR")
-                            .build());
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "File is empty"));
         }
+
+        if (file.getSize() > 5 * 1024 * 1024) { // 5MB limit
+            return ResponseEntity.badRequest().body(Map.of("error", "File size exceeds 5MB limit"));
+        }
+
+        String avatarUrl = candidateService.updateCandidateAvatar(candidate.getId(), file);
+        return ResponseEntity.ok(Map.of("avatarUrl", avatarUrl));
     }
 }
