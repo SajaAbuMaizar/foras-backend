@@ -13,7 +13,7 @@ import portal.forasbackend.dto.response.admin.ContactMessageStatsResponse;
 import portal.forasbackend.entity.Admin;
 import portal.forasbackend.entity.ContactMessage;
 import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
-import portal.forasbackend.exception.NotFoundException;
+import portal.forasbackend.core.exceptions.NotFoundException;
 import portal.forasbackend.repository.ContactMessageRepository;
 
 import java.time.LocalDateTime;

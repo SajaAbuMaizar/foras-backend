@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 import portal.forasbackend.common.model.User;
-import portal.forasbackend.exception.technical.InvalidTokenException;
+import portal.forasbackend.core.exceptions.technical.InvalidTokenException;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;

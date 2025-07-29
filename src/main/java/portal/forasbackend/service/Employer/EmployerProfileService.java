@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.employer.UpdateEmployerProfileRequest;
 import portal.forasbackend.dto.response.employer.EmployerProfileResponse;
 import portal.forasbackend.entity.Employer;
-import portal.forasbackend.exception.business.NotFoundException;
+import portal.forasbackend.core.exceptions.business.NotFoundException;
 import portal.forasbackend.mapper.EmployerProfileMapper;
 import portal.forasbackend.repository.EmployerRepository;
 import portal.forasbackend.service.CloudinaryService;
