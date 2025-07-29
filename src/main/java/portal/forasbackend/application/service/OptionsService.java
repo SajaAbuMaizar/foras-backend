@@ -1,0 +1,34 @@
+package portal.forasbackend.application.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import portal.forasbackend.application.dto.response.options.OptionsResponse;
+import portal.forasbackend.domain.model.City;
+import portal.forasbackend.domain.model.Industry;
+import portal.forasbackend.domain.model.JobType;
+import portal.forasbackend.domain.repository.CityRepository;
+import portal.forasbackend.domain.repository.IndustryRepository;
+import portal.forasbackend.domain.repository.JobTypeRepository;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class OptionsService {
+
+    private final CityRepository cityRepository;
+    private final IndustryRepository industryRepository;
+    private final JobTypeRepository jobTypeRepository;
+
+    public OptionsResponse getAllOptions() {
+        List<City> cities = cityRepository.findAll();
+        List<Industry> industries = industryRepository.findAll();
+        List<JobType> jobTypes = jobTypeRepository.findAll();
+
+        return OptionsResponse.builder()
+                .cities(cities)
+                .industries(industries)
+                .jobTypes(jobTypes)
+                .build();
+    }
+}
