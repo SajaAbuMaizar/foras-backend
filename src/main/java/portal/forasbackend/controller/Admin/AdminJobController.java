@@ -45,13 +45,12 @@ public class AdminJobController {
     }
 
     @PostMapping("/seed-job")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Object>> createSeedJob(
             @RequestParam("jobTitle") String jobTitle,
             @RequestParam("jobDescription") String jobDescription,
             @RequestParam("language") String language,
             @RequestParam("cityId") Long cityId,
-            @RequestParam("jobType") Long jobType,
+            @RequestParam("jobTypeId") Long jobType,
             @RequestParam("industryId") Long industryId,
             @RequestParam("salary") String salary,
             @RequestParam("requiredQualifications") String requiredQualifications,
