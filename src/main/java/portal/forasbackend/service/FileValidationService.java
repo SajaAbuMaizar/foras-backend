@@ -3,7 +3,7 @@ package portal.forasbackend.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import portal.forasbackend.exception.FileUploadException;
+import portal.forasbackend.core.exceptions.FileUploadException;
 
 import java.util.Arrays;
 import java.util.List;

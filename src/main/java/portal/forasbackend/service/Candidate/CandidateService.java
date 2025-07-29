@@ -10,7 +10,7 @@ import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
 import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
 import portal.forasbackend.entity.Candidate;
-import portal.forasbackend.exception.business.NotFoundException;
+import portal.forasbackend.core.exceptions.business.NotFoundException;
 import portal.forasbackend.mapper.CandidateMapper;
 import portal.forasbackend.repository.CandidateRepository;
 import portal.forasbackend.service.CloudinaryService;

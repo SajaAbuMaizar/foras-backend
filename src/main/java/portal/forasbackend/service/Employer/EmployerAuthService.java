@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import portal.forasbackend.dto.request.employer.EmployerLoginRequest;
 import portal.forasbackend.dto.request.employer.EmployerSignupRequest;
 import portal.forasbackend.entity.Employer;
-import portal.forasbackend.exception.business.PhoneExistsException;
+import portal.forasbackend.core.exceptions.business.PhoneExistsException;
 import portal.forasbackend.repository.EmployerRepository;
 import portal.forasbackend.service.JwtService;
 

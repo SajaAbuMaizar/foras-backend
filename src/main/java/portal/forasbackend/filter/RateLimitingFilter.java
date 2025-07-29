@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import portal.forasbackend.config.RateLimitingConfig;
+import portal.forasbackend.core.config.RateLimitingConfig;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
