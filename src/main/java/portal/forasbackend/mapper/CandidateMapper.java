@@ -3,7 +3,7 @@ package portal.forasbackend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.model.Candidate;
 
 @Mapper(componentModel = "spring")
 public interface CandidateMapper {

@@ -3,12 +3,12 @@ package portal.forasbackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import portal.forasbackend.dto.response.options.OptionsResponse;
-import portal.forasbackend.entity.City;
-import portal.forasbackend.entity.Industry;
-import portal.forasbackend.entity.JobType;
-import portal.forasbackend.repository.CityRepository;
-import portal.forasbackend.repository.IndustryRepository;
-import portal.forasbackend.repository.JobTypeRepository;
+import portal.forasbackend.domain.model.City;
+import portal.forasbackend.domain.model.Industry;
+import portal.forasbackend.domain.model.JobType;
+import portal.forasbackend.domain.repository.CityRepository;
+import portal.forasbackend.domain.repository.IndustryRepository;
+import portal.forasbackend.domain.repository.JobTypeRepository;
 
 import java.util.List;
 

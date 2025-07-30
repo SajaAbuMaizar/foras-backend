@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.response.employer.EmployerLogoUrlDTO;
-import portal.forasbackend.entity.Employer;
-import portal.forasbackend.repository.EmployerRepository;
+import portal.forasbackend.domain.model.Employer;
+import portal.forasbackend.domain.repository.EmployerRepository;
 import portal.forasbackend.service.CloudinaryService;
 
 import java.util.List;

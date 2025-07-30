@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.repository.AdminRepository;
+import portal.forasbackend.domain.model.Admin;
+import portal.forasbackend.domain.repository.AdminRepository;
 
 @Slf4j
 @Service

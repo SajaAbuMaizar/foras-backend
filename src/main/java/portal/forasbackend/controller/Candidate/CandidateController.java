@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
 import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.model.Candidate;
 import portal.forasbackend.service.Candidate.CandidateService;
 
 import java.util.Map;

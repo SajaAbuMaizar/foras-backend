@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import portal.forasbackend.dto.request.employer.UpdateEmployerProfileRequest;
 import portal.forasbackend.dto.response.employer.EmployerProfileResponse;
-import portal.forasbackend.entity.Employer;
+import portal.forasbackend.domain.model.Employer;
 
 @Mapper(componentModel = "spring")
 public interface EmployerProfileMapper {

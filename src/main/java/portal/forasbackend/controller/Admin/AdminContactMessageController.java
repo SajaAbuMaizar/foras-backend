@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.request.UpdateContactMessageRequest;
 import portal.forasbackend.dto.response.ContactMessageResponse;
 import portal.forasbackend.dto.response.admin.ContactMessageStatsResponse;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
+import portal.forasbackend.domain.model.Admin;
+import portal.forasbackend.domain.model.ContactMessage.ContactMessageStatus;
 import portal.forasbackend.service.ContactMessageService;
 
 import java.util.List;

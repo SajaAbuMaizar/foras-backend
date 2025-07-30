@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import portal.forasbackend.entity.City;
-import portal.forasbackend.entity.Industry;
-import portal.forasbackend.entity.JobType;
+import portal.forasbackend.domain.model.City;
+import portal.forasbackend.domain.model.Industry;
+import portal.forasbackend.domain.model.JobType;
 
 import java.util.List;
 

@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.LocalizedNameDto;
 import portal.forasbackend.dto.request.admin.AdminJobRequest;
 import portal.forasbackend.dto.response.admin.JobListResponse;
-import portal.forasbackend.entity.*;
+import portal.forasbackend.domain.model.*;
 import portal.forasbackend.enums.JobStatus;
 import portal.forasbackend.mapper.JobMapper;
-import portal.forasbackend.repository.*;
+import portal.forasbackend.domain.repository.*;
 import portal.forasbackend.service.CloudinaryService;
 import portal.forasbackend.service.JobTranslationService;
 

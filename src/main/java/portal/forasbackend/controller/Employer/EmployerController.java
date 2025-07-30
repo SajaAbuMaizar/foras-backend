@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.employer.LanguageChangeRequest;
 import portal.forasbackend.dto.response.FileUploadResponse;
-import portal.forasbackend.entity.Employer;
+import portal.forasbackend.domain.model.Employer;
 import portal.forasbackend.exception.FileUploadException;
 import portal.forasbackend.service.Employer.EmployerService;
 

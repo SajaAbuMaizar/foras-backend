@@ -4,11 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.Job;
-import portal.forasbackend.entity.JobTranslation;
-import portal.forasbackend.repository.JobRepository;
-import portal.forasbackend.repository.JobTranslationRepository;
+import portal.forasbackend.domain.model.Admin;
+import portal.forasbackend.domain.model.Job;
+import portal.forasbackend.domain.model.JobTranslation;
+import portal.forasbackend.domain.repository.JobRepository;
+import portal.forasbackend.domain.repository.JobTranslationRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.response.job.*;
-import portal.forasbackend.entity.*;
+import portal.forasbackend.domain.model.*;
 import portal.forasbackend.enums.JobStatus;
 import portal.forasbackend.mapper.JobMapper;
-import portal.forasbackend.repository.*;
-import portal.forasbackend.repository.specification.JobSpecification;
+import portal.forasbackend.domain.repository.*;
+import portal.forasbackend.domain.repository.specification.JobSpecification;
 
 import java.util.List;
 import java.util.Objects;

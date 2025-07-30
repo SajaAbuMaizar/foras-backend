@@ -2,7 +2,7 @@ package portal.forasbackend.dto.response.job;
 
 import lombok.Builder;
 import lombok.Data;
-import portal.forasbackend.entity.ApplicationStatus;
+import portal.forasbackend.domain.model.ApplicationStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

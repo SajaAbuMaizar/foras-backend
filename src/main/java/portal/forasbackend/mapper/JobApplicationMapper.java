@@ -3,7 +3,7 @@ package portal.forasbackend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import portal.forasbackend.dto.response.job.JobApplicationResponse;
-import portal.forasbackend.entity.JobApplication;
+import portal.forasbackend.domain.model.JobApplication;
 
 import java.util.List;
 import java.util.stream.Collectors;

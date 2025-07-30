@@ -2,7 +2,7 @@ package portal.forasbackend.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
+import portal.forasbackend.domain.model.ContactMessage.ContactMessageStatus;
 
 @Data
 public class UpdateContactMessageRequest {

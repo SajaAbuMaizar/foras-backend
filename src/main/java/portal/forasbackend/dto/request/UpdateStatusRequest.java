@@ -1,7 +1,7 @@
 package portal.forasbackend.dto.request;
 
 import lombok.Data;
-import portal.forasbackend.entity.ApplicationStatus;
+import portal.forasbackend.domain.model.ApplicationStatus;
 
 @Data
 public class UpdateStatusRequest {
