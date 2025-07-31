@@ -1,4 +1,4 @@
-package portal.forasbackend.controller.Admin;
+package portal.forasbackend.web.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.response.admin.DashboardStatsResponse;
 import portal.forasbackend.dto.response.admin.ActivityResponse;
-import portal.forasbackend.service.Admin.AdminDashboardService;
+import portal.forasbackend.domain.admin.service.AdminDashboardService;
 
 import java.util.List;
 

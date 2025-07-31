@@ -1,4 +1,4 @@
-package portal.forasbackend.controller.Admin;
+package portal.forasbackend.web.controller.admin;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import portal.forasbackend.dto.request.admin.AdminAuthRequest;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 import portal.forasbackend.exception.technical.AuthException;
-import portal.forasbackend.service.Admin.AdminAuthService;
+import portal.forasbackend.domain.admin.service.AdminAuthService;
 import portal.forasbackend.service.JwtService;
 
 import java.time.Duration;

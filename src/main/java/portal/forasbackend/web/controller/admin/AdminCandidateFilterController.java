@@ -1,4 +1,4 @@
-package portal.forasbackend.controller.Admin;
+package portal.forasbackend.web.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,7 +12,7 @@ import portal.forasbackend.dto.request.admin.CandidateFilterRequest;
 import portal.forasbackend.dto.response.admin.CandidateFilterResponse;
 import portal.forasbackend.dto.response.admin.FilterOptionsResponse;
 import portal.forasbackend.dto.response.shared.PagedResponse;
-import portal.forasbackend.service.Admin.CandidateFilterService;
+import portal.forasbackend.domain.admin.service.CandidateFilterService;
 
 import java.util.List;
 import java.util.Map;

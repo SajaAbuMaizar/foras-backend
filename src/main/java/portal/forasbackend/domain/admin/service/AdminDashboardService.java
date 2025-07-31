@@ -1,4 +1,4 @@
-package portal.forasbackend.service.Admin;
+package portal.forasbackend.domain.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,11 @@ import portal.forasbackend.dto.response.admin.ActivityResponse;
 import portal.forasbackend.dto.response.admin.CityCountDto;
 import portal.forasbackend.enums.Gender;
 import portal.forasbackend.enums.JobStatus;
-import portal.forasbackend.repository.*;
+import portal.forasbackend.repository.CandidateRepository;
+import portal.forasbackend.repository.EmployerRepository;
+import portal.forasbackend.repository.JobRepository;
+import portal.forasbackend.repository.MessageRepository;
+import portal.forasbackend.domain.admin.repository.ActivityLogRepository;
 import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
 import portal.forasbackend.repository.ContactMessageRepository;
 

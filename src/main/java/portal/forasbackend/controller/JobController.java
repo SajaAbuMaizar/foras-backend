@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.response.job.*;
 import portal.forasbackend.dto.response.shared.PagedResponse;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 import portal.forasbackend.domain.employer.model.Employer;
 import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.mapper.JobMapper;

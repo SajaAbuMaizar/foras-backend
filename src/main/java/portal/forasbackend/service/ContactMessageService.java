@@ -10,7 +10,7 @@ import portal.forasbackend.dto.request.ContactMessageRequest;
 import portal.forasbackend.dto.request.UpdateContactMessageRequest;
 import portal.forasbackend.dto.response.ContactMessageResponse;
 import portal.forasbackend.dto.response.admin.ContactMessageStatsResponse;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 import portal.forasbackend.entity.ContactMessage;
 import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
 import portal.forasbackend.exception.NotFoundException;

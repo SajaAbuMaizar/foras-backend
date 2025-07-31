@@ -1,12 +1,12 @@
-package portal.forasbackend.service.Admin;
+package portal.forasbackend.domain.admin.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.repository.AdminRepository;
+import portal.forasbackend.domain.admin.model.Admin;
+import portal.forasbackend.domain.admin.repository.AdminRepository;
 
 @Slf4j
 @Service

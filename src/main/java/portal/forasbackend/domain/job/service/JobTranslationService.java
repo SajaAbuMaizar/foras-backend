@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.domain.job.model.JobTranslation;
 import portal.forasbackend.domain.job.repository.JobRepository;

@@ -1,4 +1,4 @@
-package portal.forasbackend.service.Admin;
+package portal.forasbackend.domain.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import portal.forasbackend.domain.employer.model.Employer;
 import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.domain.job.model.JobTranslation;
 import portal.forasbackend.domain.job.model.JobType;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 import portal.forasbackend.entity.City;
 import portal.forasbackend.entity.Industry;
 import portal.forasbackend.enums.JobStatus;
@@ -26,7 +26,7 @@ import portal.forasbackend.repository.IndustryRepository;
 import portal.forasbackend.domain.job.repository.JobTypeRepository;
 import portal.forasbackend.domain.job.service.JobTranslationService;
 import portal.forasbackend.service.CloudinaryService;
-import portal.forasbackend.repository.AdminRepository;
+import portal.forasbackend.domain.admin.repository.AdminRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,7 +1,7 @@
-package portal.forasbackend.repository;
+package portal.forasbackend.domain.admin.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 
 import java.util.Optional;
 

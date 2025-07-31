@@ -1,4 +1,4 @@
-package portal.forasbackend.controller.Admin;
+package portal.forasbackend.web.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.admin.AdminJobRequest;
 import portal.forasbackend.dto.response.admin.JobListResponse;
-import portal.forasbackend.entity.Admin;
+import portal.forasbackend.domain.admin.model.Admin;
 import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.exception.FileUploadException;
-import portal.forasbackend.service.Admin.AdminJobService;
+import portal.forasbackend.domain.admin.service.AdminJobService;
 
 import java.util.List;
 import java.util.Map;
