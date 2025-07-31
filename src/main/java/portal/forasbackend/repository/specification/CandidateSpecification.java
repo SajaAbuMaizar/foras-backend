@@ -3,7 +3,7 @@ package portal.forasbackend.repository.specification;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 import portal.forasbackend.dto.request.admin.CandidateFilterRequest;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.enums.Gender;
 
 import java.util.ArrayList;

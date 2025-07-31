@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.employer.UpdateEmployerProfileRequest;
 import portal.forasbackend.dto.response.employer.EmployerProfileResponse;
-import portal.forasbackend.entity.Employer;
-import portal.forasbackend.service.Employer.EmployerProfileService;
+import portal.forasbackend.domain.employer.model.Employer;
+import portal.forasbackend.application.employer.EmployerProfileService;
 
 import java.util.Map;
 

@@ -8,12 +8,12 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.response.employer.EmployerDTO;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.Candidate;
-import portal.forasbackend.entity.Employer;
-import portal.forasbackend.service.Admin.AdminAuthService;
-import portal.forasbackend.service.Candidate.CandidateService;
-import portal.forasbackend.service.Employer.EmployerService;
+import portal.forasbackend.domain.admin.model.Admin;
+import portal.forasbackend.domain.candidate.model.Candidate;
+import portal.forasbackend.domain.employer.model.Employer;
+import portal.forasbackend.domain.admin.service.AdminAuthService;
+import portal.forasbackend.domain.candidate.service.CandidateService;
+import portal.forasbackend.domain.employer.service.EmployerService;
 import portal.forasbackend.service.JwtService;
 import java.util.Map;
 

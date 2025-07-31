@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
 import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
-import portal.forasbackend.entity.Candidate;
-import portal.forasbackend.service.Candidate.CandidateService;
+import portal.forasbackend.domain.candidate.model.Candidate;
+import portal.forasbackend.domain.candidate.service.CandidateService;
 
 import java.util.Map;
 

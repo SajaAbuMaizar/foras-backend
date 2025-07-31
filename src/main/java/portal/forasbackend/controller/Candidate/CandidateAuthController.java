@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.request.candidate.AuthRequest;
 import portal.forasbackend.dto.request.candidate.CandidateSignupRequestDTO;
 import portal.forasbackend.dto.response.candidate.CandidateSignupResponseDTO;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.exception.technical.AuthException;
-import portal.forasbackend.service.Candidate.CandidateAuthService;
+import portal.forasbackend.application.candidate.CandidateAuthService;
 import portal.forasbackend.service.JwtService;
-import portal.forasbackend.service.Candidate.CandidateService;
+import portal.forasbackend.domain.candidate.service.CandidateService;
 
 import java.time.Duration;
 import java.util.Map;

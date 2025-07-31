@@ -1,7 +1,7 @@
 package portal.forasbackend.repository.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import portal.forasbackend.entity.Job;
+import portal.forasbackend.domain.job.model.Job;
 import jakarta.persistence.criteria.Predicate;
 import portal.forasbackend.enums.JobStatus;
 
