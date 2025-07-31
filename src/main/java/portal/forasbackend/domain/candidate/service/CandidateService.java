@@ -1,4 +1,4 @@
-package portal.forasbackend.service.Candidate;
+package portal.forasbackend.domain.candidate.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
 import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.exception.business.NotFoundException;
 import portal.forasbackend.mapper.CandidateMapper;
-import portal.forasbackend.repository.CandidateRepository;
+import portal.forasbackend.domain.candidate.repository.CandidateRepository;
 import portal.forasbackend.service.CloudinaryService;
 
 import java.util.Optional;

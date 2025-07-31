@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.request.UpdateStatusRequest;
 import portal.forasbackend.dto.response.job.JobApplicationResponse;
 import portal.forasbackend.dto.response.job.MainPageJobListResponse;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.entity.Job;
 import portal.forasbackend.entity.JobApplication;

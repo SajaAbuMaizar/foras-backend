@@ -12,10 +12,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.service.Admin.AdminAuthService;
-import portal.forasbackend.service.Candidate.CandidateService;
+import portal.forasbackend.domain.candidate.service.CandidateService;
 import portal.forasbackend.service.Employer.EmployerService;
 import portal.forasbackend.service.JwtService;
 

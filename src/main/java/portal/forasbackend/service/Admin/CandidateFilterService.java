@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import portal.forasbackend.dto.request.admin.CandidateFilterRequest;
 import portal.forasbackend.dto.response.admin.CandidateFilterResponse;
 import portal.forasbackend.dto.response.admin.FilterOptionsResponse;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.entity.City;
 import portal.forasbackend.enums.Gender;
-import portal.forasbackend.repository.CandidateRepository;
+import portal.forasbackend.domain.candidate.repository.CandidateRepository;
 import portal.forasbackend.repository.CityRepository;
 import portal.forasbackend.repository.specification.CandidateSpecification;
 

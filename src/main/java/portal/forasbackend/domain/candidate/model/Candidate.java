@@ -1,4 +1,4 @@
-package portal.forasbackend.entity;
+package portal.forasbackend.domain.candidate.model;
 
 import jakarta.persistence.*;
 import lombok.*;

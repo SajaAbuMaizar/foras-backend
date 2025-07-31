@@ -1,9 +1,9 @@
-package portal.forasbackend.repository;
+package portal.forasbackend.domain.candidate.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.enums.Gender;
 
 import java.time.LocalDateTime;

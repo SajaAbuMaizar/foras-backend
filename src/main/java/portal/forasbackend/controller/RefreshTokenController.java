@@ -11,11 +11,11 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.candidate.model.Candidate;
 import portal.forasbackend.entity.Employer;
 import portal.forasbackend.exception.technical.InvalidTokenException;
 import portal.forasbackend.service.Admin.AdminAuthService;
-import portal.forasbackend.service.Candidate.CandidateService;
+import portal.forasbackend.domain.candidate.service.CandidateService;
 import portal.forasbackend.service.Employer.EmployerService;
 import portal.forasbackend.service.JwtService;
 
