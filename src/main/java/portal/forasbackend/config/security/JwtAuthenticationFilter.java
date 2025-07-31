@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import portal.forasbackend.entity.Admin;
 import portal.forasbackend.domain.candidate.model.Candidate;
-import portal.forasbackend.entity.Employer;
+import portal.forasbackend.domain.employer.model.Employer;
 import portal.forasbackend.service.Admin.AdminAuthService;
 import portal.forasbackend.domain.candidate.service.CandidateService;
-import portal.forasbackend.service.Employer.EmployerService;
+import portal.forasbackend.domain.employer.service.EmployerService;
 import portal.forasbackend.service.JwtService;
 
 import java.io.IOException;

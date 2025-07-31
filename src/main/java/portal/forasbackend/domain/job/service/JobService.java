@@ -1,4 +1,4 @@
-package portal.forasbackend.service;
+package portal.forasbackend.domain.job.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +10,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.response.job.*;
-import portal.forasbackend.entity.*;
+import portal.forasbackend.domain.job.model.Job;
+import portal.forasbackend.domain.job.model.JobType;
+import portal.forasbackend.domain.employer.model.Employer;
+import portal.forasbackend.domain.job.repository.JobRepository;
+import portal.forasbackend.domain.job.repository.JobTypeRepository;
+import portal.forasbackend.domain.job.repository.JobTranslationRepository;
+import portal.forasbackend.domain.employer.repository.EmployerRepository;
+import portal.forasbackend.domain.job.service.JobTranslationService;
+import portal.forasbackend.service.CloudinaryService;
+import portal.forasbackend.entity.City;
+import portal.forasbackend.entity.Industry;
 import portal.forasbackend.enums.JobStatus;
 import portal.forasbackend.mapper.JobMapper;
-import portal.forasbackend.repository.*;
+import portal.forasbackend.repository.CityRepository;
+import portal.forasbackend.repository.IndustryRepository;
 import portal.forasbackend.repository.specification.JobSpecification;
 
 import java.util.List;

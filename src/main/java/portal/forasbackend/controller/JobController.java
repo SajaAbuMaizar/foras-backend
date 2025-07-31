@@ -15,11 +15,11 @@ import portal.forasbackend.dto.request.job.JobRequest;
 import portal.forasbackend.dto.response.job.*;
 import portal.forasbackend.dto.response.shared.PagedResponse;
 import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.Employer;
-import portal.forasbackend.entity.Job;
+import portal.forasbackend.domain.employer.model.Employer;
+import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.mapper.JobMapper;
-import portal.forasbackend.service.JobService;
-import portal.forasbackend.service.JobTranslationService;
+import portal.forasbackend.domain.job.service.JobService;
+import portal.forasbackend.domain.job.service.JobTranslationService;
 
 import java.util.List;
 import java.util.Map;

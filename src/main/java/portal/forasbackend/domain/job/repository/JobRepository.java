@@ -1,11 +1,11 @@
-package portal.forasbackend.repository;
+package portal.forasbackend.domain.job.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import portal.forasbackend.entity.Job;
+import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.enums.JobStatus;
 
 import java.time.LocalDateTime;

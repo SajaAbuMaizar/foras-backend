@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import portal.forasbackend.dto.request.employer.EmployerSignupRequest;
 import portal.forasbackend.dto.request.employer.EmployerLoginRequest;
-import portal.forasbackend.service.Employer.EmployerAuthService;
+import portal.forasbackend.application.employer.EmployerAuthService;
 
 import java.time.Duration;
 import java.util.Map;

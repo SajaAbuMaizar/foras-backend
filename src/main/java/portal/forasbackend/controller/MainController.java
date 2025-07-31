@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import portal.forasbackend.dto.response.employer.EmployerLogoUrlDTO;
-import portal.forasbackend.service.Employer.EmployerService;
+import portal.forasbackend.domain.employer.service.EmployerService;
 import java.util.List;
 
 

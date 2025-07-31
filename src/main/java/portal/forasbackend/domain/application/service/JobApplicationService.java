@@ -1,4 +1,4 @@
-package portal.forasbackend.service;
+package portal.forasbackend.domain.application.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,14 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import portal.forasbackend.dto.response.job.JobApplicationResponse;
 import portal.forasbackend.entity.ApplicationStatus;
 import portal.forasbackend.domain.candidate.model.Candidate;
-import portal.forasbackend.entity.JobApplication;
-import portal.forasbackend.entity.Job;
+import portal.forasbackend.domain.application.model.JobApplication;
+import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.exception.ResourceNotFoundException;
 import portal.forasbackend.exception.UnauthorizedException;
 import portal.forasbackend.mapper.JobApplicationMapper;
 import portal.forasbackend.domain.candidate.repository.CandidateRepository;
-import portal.forasbackend.repository.JobApplicationRepository;
-import portal.forasbackend.repository.JobRepository;
+import portal.forasbackend.domain.application.repository.JobApplicationRepository;
+import portal.forasbackend.domain.job.repository.JobRepository;
 
 import java.util.List;
 import java.util.Optional;

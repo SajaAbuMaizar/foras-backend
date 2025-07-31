@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import portal.forasbackend.dto.response.job.MainPageJobListResponse;
 import portal.forasbackend.domain.candidate.model.Candidate;
-import portal.forasbackend.entity.Job;
+import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.entity.SavedJob;
 import portal.forasbackend.mapper.JobMapper;
 import portal.forasbackend.domain.candidate.repository.CandidateRepository;
-import portal.forasbackend.repository.JobRepository;
+import portal.forasbackend.domain.job.repository.JobRepository;
 import portal.forasbackend.repository.SavedJobRepository;
 
 import java.util.List;

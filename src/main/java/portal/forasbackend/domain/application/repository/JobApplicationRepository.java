@@ -1,9 +1,8 @@
-package portal.forasbackend.repository;
+package portal.forasbackend.domain.application.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import portal.forasbackend.domain.candidate.model.Candidate;
-import portal.forasbackend.entity.Employer;
-import portal.forasbackend.entity.JobApplication;
+import portal.forasbackend.domain.application.model.JobApplication;
 
 import java.util.List;
 import java.util.Optional;

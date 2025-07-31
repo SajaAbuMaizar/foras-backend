@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.admin.AdminJobRequest;
 import portal.forasbackend.dto.response.admin.JobListResponse;
 import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.Job;
+import portal.forasbackend.domain.job.model.Job;
 import portal.forasbackend.exception.FileUploadException;
 import portal.forasbackend.service.Admin.AdminJobService;
 

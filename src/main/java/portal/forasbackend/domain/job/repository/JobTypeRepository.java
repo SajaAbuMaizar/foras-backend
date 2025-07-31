@@ -1,8 +1,8 @@
-package portal.forasbackend.repository;
+package portal.forasbackend.domain.job.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import portal.forasbackend.entity.JobType;
+import portal.forasbackend.domain.job.model.JobType;
 
 import java.util.Optional;
 

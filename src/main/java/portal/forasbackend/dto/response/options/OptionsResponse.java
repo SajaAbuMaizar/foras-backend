@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import portal.forasbackend.entity.City;
 import portal.forasbackend.entity.Industry;
-import portal.forasbackend.entity.JobType;
+import portal.forasbackend.domain.job.model.JobType;
 
 import java.util.List;
 

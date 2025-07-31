@@ -1,4 +1,4 @@
-package portal.forasbackend.service.Employer;
+package portal.forasbackend.application.employer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.employer.UpdateEmployerProfileRequest;
 import portal.forasbackend.dto.response.employer.EmployerProfileResponse;
-import portal.forasbackend.entity.Employer;
+import portal.forasbackend.domain.employer.model.Employer;
 import portal.forasbackend.exception.business.NotFoundException;
 import portal.forasbackend.mapper.EmployerProfileMapper;
-import portal.forasbackend.repository.EmployerRepository;
+import portal.forasbackend.domain.employer.repository.EmployerRepository;
 import portal.forasbackend.service.CloudinaryService;
 
 @Slf4j
