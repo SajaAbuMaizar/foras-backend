@@ -10,9 +10,9 @@ import portal.forasbackend.dto.response.admin.ActivityResponse;
 import portal.forasbackend.dto.response.admin.CityCountDto;
 import portal.forasbackend.enums.Gender;
 import portal.forasbackend.enums.JobStatus;
-import portal.forasbackend.repository.*;
-import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
-import portal.forasbackend.repository.ContactMessageRepository;
+import portal.forasbackend.domain.repository.*;
+import portal.forasbackend.domain.model.ContactMessage.ContactMessageStatus;
+import portal.forasbackend.domain.repository.ContactMessageRepository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

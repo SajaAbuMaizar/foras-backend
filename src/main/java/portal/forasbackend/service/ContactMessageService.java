@@ -10,11 +10,11 @@ import portal.forasbackend.dto.request.ContactMessageRequest;
 import portal.forasbackend.dto.request.UpdateContactMessageRequest;
 import portal.forasbackend.dto.response.ContactMessageResponse;
 import portal.forasbackend.dto.response.admin.ContactMessageStatsResponse;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.entity.ContactMessage;
-import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
+import portal.forasbackend.domain.model.Admin;
+import portal.forasbackend.domain.model.ContactMessage;
+import portal.forasbackend.domain.model.ContactMessage.ContactMessageStatus;
 import portal.forasbackend.exception.NotFoundException;
-import portal.forasbackend.repository.ContactMessageRepository;
+import portal.forasbackend.domain.repository.ContactMessageRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

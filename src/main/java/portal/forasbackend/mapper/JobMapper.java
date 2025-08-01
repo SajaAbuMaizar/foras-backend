@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import portal.forasbackend.dto.response.job.MainPageJobListResponse;
-import portal.forasbackend.entity.Job;
-import portal.forasbackend.entity.JobTranslation;
+import portal.forasbackend.domain.model.Job;
+import portal.forasbackend.domain.model.JobTranslation;
 
 @Mapper(componentModel = "spring")
 public interface JobMapper {

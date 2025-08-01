@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import portal.forasbackend.entity.Industry;
-import portal.forasbackend.repository.IndustryRepository;
+import portal.forasbackend.domain.model.Industry;
+import portal.forasbackend.domain.repository.IndustryRepository;
 
 import java.io.InputStream;
 import java.util.List;

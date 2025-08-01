@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import portal.forasbackend.dto.request.candidate.AuthRequest;
 import portal.forasbackend.dto.request.candidate.CandidateSignupRequestDTO;
 import portal.forasbackend.dto.response.candidate.CandidateSignupResponseDTO;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.model.Candidate;
 import portal.forasbackend.exception.technical.AuthException;
 import portal.forasbackend.service.Candidate.CandidateAuthService;
 import portal.forasbackend.service.JwtService;

@@ -2,8 +2,8 @@ package portal.forasbackend.loader;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import portal.forasbackend.entity.City;
-import portal.forasbackend.repository.CityRepository;
+import portal.forasbackend.domain.model.City;
+import portal.forasbackend.domain.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

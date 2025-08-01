@@ -9,10 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import portal.forasbackend.dto.request.candidate.UpdateCandidateProfileRequest;
 import portal.forasbackend.dto.request.candidate.UpdateCredentialsRequest;
 import portal.forasbackend.dto.response.candidate.CandidateProfileDto;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.model.Candidate;
 import portal.forasbackend.exception.business.NotFoundException;
 import portal.forasbackend.mapper.CandidateMapper;
-import portal.forasbackend.repository.CandidateRepository;
+import portal.forasbackend.domain.repository.CandidateRepository;
 import portal.forasbackend.service.CloudinaryService;
 
 import java.util.Optional;

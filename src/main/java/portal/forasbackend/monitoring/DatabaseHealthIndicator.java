@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
-import portal.forasbackend.repository.JobRepository;
+import portal.forasbackend.domain.repository.JobRepository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

@@ -2,8 +2,8 @@ package portal.forasbackend.service.Admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import portal.forasbackend.entity.Admin;
-import portal.forasbackend.repository.AdminRepository;
+import portal.forasbackend.domain.model.Admin;
+import portal.forasbackend.domain.repository.AdminRepository;
 
 import java.util.Optional;
 

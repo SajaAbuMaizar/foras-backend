@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import portal.forasbackend.dto.request.candidate.CandidateSignupRequestDTO;
 import portal.forasbackend.dto.response.candidate.CandidateSignupResponseDTO;
-import portal.forasbackend.entity.City;
-import portal.forasbackend.entity.Candidate;
+import portal.forasbackend.domain.model.City;
+import portal.forasbackend.domain.model.Candidate;
 import portal.forasbackend.enums.Gender;
 import portal.forasbackend.exception.business.CityNotFoundException;
 import portal.forasbackend.exception.business.InvalidGenderException;
 import portal.forasbackend.exception.business.PhoneExistsException;
-import portal.forasbackend.repository.CityRepository;
-import portal.forasbackend.repository.CandidateRepository;
+import portal.forasbackend.domain.repository.CityRepository;
+import portal.forasbackend.domain.repository.CandidateRepository;
 import portal.forasbackend.service.JwtService;
 
 

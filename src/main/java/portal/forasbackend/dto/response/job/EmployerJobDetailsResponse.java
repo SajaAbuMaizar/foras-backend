@@ -4,8 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import portal.forasbackend.dto.LocalizedNameDto;
 import portal.forasbackend.dto.response.candidate.CandidateDto;
-import portal.forasbackend.entity.Job;
-import portal.forasbackend.entity.JobTranslation;
+import portal.forasbackend.domain.model.Job;
+import portal.forasbackend.domain.model.JobTranslation;
 import portal.forasbackend.enums.JobStatus;
 
 import java.util.List;

@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import portal.forasbackend.dto.response.employer.EmployerSummaryDTO;
-import portal.forasbackend.entity.City;
-import portal.forasbackend.entity.Industry;
+import portal.forasbackend.domain.model.City;
+import portal.forasbackend.domain.model.Industry;
 
 import java.time.LocalDateTime;
 

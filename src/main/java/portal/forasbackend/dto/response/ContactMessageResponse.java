@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import portal.forasbackend.entity.ContactMessage.ContactMessageStatus;
+import portal.forasbackend.domain.model.ContactMessage.ContactMessageStatus;
 
 import java.time.LocalDateTime;
 

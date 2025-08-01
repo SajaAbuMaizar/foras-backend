@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import portal.forasbackend.entity.JobType;
-import portal.forasbackend.repository.JobTypeRepository;
+import portal.forasbackend.domain.model.JobType;
+import portal.forasbackend.domain.repository.JobTypeRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
